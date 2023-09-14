@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/baseline_home_24"
+            android:title="Home"/>
+
+        <item android:title="Options">
+            <menu>
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/baseline_login_24"
+                    android:title="Login Account"/>
+
+                <item
+                    android:id="@+id/nav_register"
+                    android:icon="@drawable/baseline_account_box_24"
+                    android:title="Register Account"/>
+
+                <item
+                    android:id="@+id/nav_forget"
+                    android:icon="@drawable/baseline_password_24"
+                    android:title="Forget Password"/>
+            </menu>
+        </item>
+        <item android:title="Communication">
+            <menu>
+                <item
+                    android:id="@+id/nav_contact"
+                    android:icon="@drawable/baseline_call_24"
+                    android:title="Contact Us"/>
+
+                <item
+                    android:id="@+id/nav_email"
+                    android:icon="@drawable/baseline_email_24"
+                    android:title="Email Us" />
+            </menu>
+        </item>
+    </group>
+</menu>
