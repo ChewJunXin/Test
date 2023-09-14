@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background with rounded corners and shadow for ImageButton -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" /> <!-- Background color -->
+            <corners android:radius="100dp" /> <!-- Adjust the corner radius as needed -->
+        </shape>
+    </item>
+    <item android:right="4dp" android:left="4dp" android:top="4dp" android:bottom="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#20000000" /> <!-- Shadow color and opacity -->
+            <corners android:radius="10dp" /> <!-- Adjust the corner radius as needed -->
+        </shape>
+    </item>
+</layer-list>
