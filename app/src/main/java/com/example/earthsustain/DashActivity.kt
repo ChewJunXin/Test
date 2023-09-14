@@ -1,13 +1,9 @@
 package com.example.earthsustain
 
-import android.app.Fragment
-import android.content.res.Configuration
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -15,9 +11,6 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.example.earthsustain.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener
-import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
 
 class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
@@ -65,7 +58,8 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 openFragment(HomeFragment()) }
             R.id.nav_logout -> {
                 showToast("Logout Clicked")
-                openFragment(HomeFragment())
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_profile -> {
                 showToast("Profile Clicked")

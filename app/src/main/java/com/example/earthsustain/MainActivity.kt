@@ -15,8 +15,7 @@ class MainActivity : AppCompatActivity(){
 
         loginbtn.setOnClickListener{
             val intent = Intent(this, DashActivity::class.java)
-//            intent.putExtra("username", "exampleUsername") // Pass any data you need
-//            val username = intent.getStringExtra("username")
+
             startActivity(intent)
         }
     }
