@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 
-class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var fragmentManager : FragmentManager
@@ -21,16 +21,16 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_navigationlogin)
+        setContentView(R.layout.activity_navigation)
 
         createNavigation(savedInstanceState)
 
     }
 
     private fun createNavigation(savedInstanceState: Bundle?){
-        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout_login)
+        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbarlogin)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         if (savedInstanceState == null){
             fragmentManager = supportFragmentManager
-            openFragment(LoginFragment())
+            openFragment(EventFragment())
         }
     }
 
@@ -54,27 +54,23 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         when(item.itemId){
             R.id.nav_home -> {
                 showToast("Home Clicked")
+                openFragment(HomeFragment()) }
+            R.id.nav_logout -> {
+                showToast("Logout Clicked")
                 val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent) }
-            R.id.nav_login-> {
-                showToast("Login Clicked")
-                openFragment(LoginFragment())
+                startActivity(intent)
             }
-            R.id.nav_register -> {
-                showToast("Register Clicked")
-                openFragment(LoginFragment())
-            }
-            R.id.nav_forget -> {
-                showToast("Forget Password Clicked")
-                openFragment(LoginFragment())
+            R.id.nav_profile -> {
+                showToast("Profile Clicked")
+                openFragment(ProfileFragment())
             }
             R.id.nav_contact -> {
                 showToast("Contact Clicked")
-                openFragment(LoginFragment())
+                openFragment(HomeFragment())
             }
             R.id.nav_email -> {
                 showToast("Email Clicked")
-                openFragment(LoginFragment())
+                openFragment(HomeFragment())
             }
 
         }
