@@ -38,7 +38,7 @@
             app:srcCompat="@drawable/programme" />
 
         <TextView
-            android:id="@+id/Programme"
+            android:id="@+id/programme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Programme"

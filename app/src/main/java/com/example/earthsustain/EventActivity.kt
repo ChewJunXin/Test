@@ -17,7 +17,7 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var fragmentManager : FragmentManager
-
+    lateinit var toolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,18 +29,24 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         // Retrieve the data from fragment to perform specific tasks
         val event = intent.getStringExtra("event")
 
+        val donation = intent.getStringExtra("donation")
+
         // Check if data is not null
         if (event != null) {
             // Call the function with the data
             showEvent()
         }
 
+        if (donation != null) {
+            // Call the function with the data
+            showDonation()
+        }
     }
 
     private fun createNavigation(savedInstanceState: Bundle?){
         drawerLayout = findViewById(R.id.drawer_layout)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         toolbar.title = "Event"
@@ -63,10 +69,13 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean{
+
         when(item.itemId){
             R.id.nav_home -> {
-                showToast("Home Clicked")
-                openFragment(HomeFragment()) }
+                showToast("Dashboard Clicked")
+                openFragment(HomeFragment())
+                toolbar.title = "DashBoard"
+            }
             R.id.nav_logout -> {
                 showToast("Logout Clicked")
                 val intent = Intent(this, MainActivity::class.java)
@@ -75,6 +84,7 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             R.id.nav_profile -> {
                 showToast("Profile Clicked")
                 openFragment(ProfileFragment())
+                toolbar.title = "Profile"
             }
             R.id.nav_contact -> {
                 showToast("Contact Clicked")
@@ -110,6 +120,10 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     private fun showEvent(){
+
+    }
+
+    private fun showDonation(){
 
     }
 }

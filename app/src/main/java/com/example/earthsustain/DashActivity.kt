@@ -17,6 +17,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var fragmentManager : FragmentManager
+    lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +32,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawerLayout = findViewById(R.id.drawer_layout)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         toolbar.title  = "DashBoard"
@@ -67,6 +68,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_profile -> {
                 showToast("Profile Clicked")
                 openFragment(ProfileFragment())
+                toolbar.title = "Profile"
             }
             R.id.nav_contact -> {
                 showToast("Contact Clicked")
