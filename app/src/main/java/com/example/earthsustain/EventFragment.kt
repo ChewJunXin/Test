@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 
 class EventFragment : Fragment() {
 
@@ -18,15 +19,33 @@ class EventFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_event, container, false)
 
-        // Find the eventbtn ImageView
-        val eventBtn = view.findViewById<ImageView>(R.id.progbtn)
+        // Declare variables
+        val progbtn = view.findViewById<ImageView>(R.id.progbtn)
+        val donabtn = view.findViewById<ImageView>(R.id.donabtn)
 
-        // Set an OnClickListener for eventbtn
-        eventBtn.setOnClickListener {
+        val prog = view.findViewById<TextView>(R.id.programme)
+        val dona = view.findViewById<TextView>(R.id.donation)
+
+        // Set an OnClickListener for buttons
+        // Either progbtn or prog is clicked
+        val eventClick = View.OnClickListener {
             val intent = Intent(requireContext(), EventActivity::class.java)
             intent.putExtra("event", "approve")
             startActivity(intent)
         }
+
+        progbtn.setOnClickListener(eventClick)
+        prog.setOnClickListener(eventClick)
+
+        // Either donabtn or dona is clicked
+        val donaClick = View.OnClickListener {
+            val intent = Intent(requireContext(), EventActivity::class.java)
+            intent.putExtra("donation", "approve")
+            startActivity(intent)
+        }
+
+        donabtn.setOnClickListener(donaClick)
+        dona.setOnClickListener(donaClick)
 
         return view
     }
