@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/eventbtn"
+            android:id="@+id/progbtn"
             android:layout_width="291dp"
             android:layout_height="91dp"
             android:scaleType="fitXY"
@@ -48,7 +48,7 @@
             app:srcCompat="@drawable/social" />
 
         <TextView
-            android:id="@+id/social"
+            android:id="@+id/dona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Social"
