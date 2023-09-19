@@ -24,13 +24,16 @@
                 android:name="android.app.lib_name"
                 android:value=""/>
         </activity>
-
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false">
+        </activity>
         <activity
             android:name=".DashActivity"
             android:exported="false">
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".EventActivity"
             android:exported="false">
         </activity>
     </application>

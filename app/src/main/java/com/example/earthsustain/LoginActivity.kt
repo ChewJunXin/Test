@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     private fun createNavigation(savedInstanceState: Bundle?){
-        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout_login)
+        drawerLayout = findViewById(R.id.drawer_layout_login)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbarlogin)
         setSupportActionBar(toolbar)

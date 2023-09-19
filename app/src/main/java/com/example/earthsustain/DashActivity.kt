@@ -28,7 +28,8 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun createNavigation(savedInstanceState: Bundle?){
-        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+
+        drawerLayout = findViewById(R.id.drawer_layout)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
