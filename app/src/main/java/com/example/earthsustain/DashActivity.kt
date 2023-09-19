@@ -34,6 +34,8 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        toolbar.title  = "DashBoard"
+
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
 
 

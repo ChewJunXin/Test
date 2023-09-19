@@ -23,7 +23,17 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         setContentView(R.layout.activity_navigation)
 
+        //Show the navigation bar
         createNavigation(savedInstanceState)
+
+        // Retrieve the data from fragment to perform specific tasks
+        val event = intent.getStringExtra("event")
+
+        // Check if data is not null
+        if (event != null) {
+            // Call the function with the data
+            showEvent()
+        }
 
     }
 
@@ -32,6 +42,8 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        toolbar.title = "Event"
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
 
@@ -97,4 +109,7 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         fragmentTransaction.commit()
     }
 
+    private fun showEvent(){
+
+    }
 }
