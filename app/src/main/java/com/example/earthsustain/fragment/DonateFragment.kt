@@ -1,10 +1,9 @@
-package com.example.earthsustain
+package com.example.earthsustain.fragment
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
+import com.example.earthsustain.R
 
 class DonateFragment : Fragment() {
 
@@ -28,6 +29,22 @@ class DonateFragment : Fragment() {
         val donateButton = view.findViewById<Button>(R.id.donateButton)
 
         donateButton.setOnClickListener {
+            val amountString = donationAmountEditText.text.toString()
+
+            if (amountString.isEmpty()) {
+                showToast("Please enter some amount")
+                return@setOnClickListener
+            }
+
+            // Remove leading zeros and unnecessary decimal point
+            val amountFormatted = amountString.trimStart('0').removePrefix(".")
+            val amount = amountFormatted.toDoubleOrNull() ?: 0.00
+
+            if (amount < 10 || amount > 99999.99) {
+                showToast("Amount must be between 10 and 99999.99")
+                return@setOnClickListener
+            }
+
             // Clear the entered digits and reset the text of all EditTexts
             enteredDigits.clear()
 
@@ -63,11 +80,7 @@ class DonateFragment : Fragment() {
 
                 if (enteredPin == correctPin) {
                     // Correct PIN entered, process the donation
-                    val donationAmount = donationAmountEditText.text.toString().toDoubleOrNull() ?: 0.0
-                    // Deduct the donation amount from the user's wallet
-                    // Implement your donation processing logic here
-                    // Display a success message using Toast
-                    val successMessage = "RM $donationAmount Donate Successful!"
+                    val successMessage = "RM $amount Donate Successful!"
                     showToast(successMessage)
                 } else {
                     // Incorrect PIN entered, display an error message using Toast

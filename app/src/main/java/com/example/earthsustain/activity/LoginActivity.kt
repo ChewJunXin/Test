@@ -1,4 +1,4 @@
-package com.example.earthsustain
+package com.example.earthsustain.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,51 +11,38 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.earthsustain.fragment.LoginFragment
+import com.example.earthsustain.MainActivity
+import com.example.earthsustain.R
 import com.google.android.material.navigation.NavigationView
 
-class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var fragmentManager : FragmentManager
-    lateinit var toolbar: Toolbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_navigation)
+        setContentView(R.layout.activity_navigationlogin)
 
-        //Show the navigation bar
         createNavigation(savedInstanceState)
 
-        // Retrieve the data from fragment to perform specific tasks
-        val programme = intent.getStringExtra("programme")
-
-        val donation = intent.getStringExtra("donation")
-
-        // Check if data is not null
-        if (programme != null) {
-            // Call the event function
-            toolbar.title = "Programme"
-        }
-
-        if (donation != null) {
-            // Call the donation function
-            toolbar.title = "Donation"
-            openFragment(DonateFragment())
-        }
     }
 
     private fun createNavigation(savedInstanceState: Bundle?){
-        drawerLayout = findViewById(R.id.drawer_layout)
+        drawerLayout = findViewById(R.id.drawer_layout_login)
 
-        toolbar = findViewById(R.id.toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.toolbarlogin)
         setSupportActionBar(toolbar)
-
-        toolbar.title = "Event"
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
 
 
-        val toggle = ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.open, R.string.close)
+        val toggle = ActionBarDrawerToggle(this,drawerLayout, toolbar,
+            R.string.open,
+            R.string.close
+        )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -64,36 +51,36 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         if (savedInstanceState == null){
             fragmentManager = supportFragmentManager
-            openFragment(EventFragment())
+            openFragment(LoginFragment())
         }
     }
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean{
-
         when(item.itemId){
             R.id.nav_home -> {
-                showToast("Dashboard Clicked")
-                openFragment(HomeFragment())
-                toolbar.title = "DashBoard"
-            }
-            R.id.nav_logout -> {
-                showToast("Logout Clicked")
+                showToast("Home Clicked")
                 val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                startActivity(intent) }
+            R.id.nav_login -> {
+                showToast("Login Clicked")
+                openFragment(LoginFragment())
             }
-            R.id.nav_profile -> {
-                showToast("Profile Clicked")
-                openFragment(ProfileFragment())
-                toolbar.title = "Profile"
+            R.id.nav_register -> {
+                showToast("Register Clicked")
+                openFragment(LoginFragment())
+            }
+            R.id.nav_forget -> {
+                showToast("Forget Password Clicked")
+                openFragment(LoginFragment())
             }
             R.id.nav_contact -> {
                 showToast("Contact Clicked")
-                openFragment(HomeFragment())
+                openFragment(LoginFragment())
             }
             R.id.nav_email -> {
                 showToast("Email Clicked")
-                openFragment(HomeFragment())
+                openFragment(LoginFragment())
             }
 
         }
@@ -119,4 +106,5 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
     }
+
 }
