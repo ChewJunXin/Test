@@ -27,19 +27,20 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         createNavigation(savedInstanceState)
 
         // Retrieve the data from fragment to perform specific tasks
-        val event = intent.getStringExtra("event")
+        val programme = intent.getStringExtra("programme")
 
         val donation = intent.getStringExtra("donation")
 
         // Check if data is not null
-        if (event != null) {
-            // Call the function with the data
-            showEvent()
+        if (programme != null) {
+            // Call the event function
+            toolbar.title = "Programme"
         }
 
         if (donation != null) {
-            // Call the function with the data
-            showDonation()
+            // Call the donation function
+            toolbar.title = "Donation"
+            openFragment(DonateFragment())
         }
     }
 
@@ -117,13 +118,5 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
-    }
-
-    private fun showEvent(){
-
-    }
-
-    private fun showDonation(){
-
     }
 }

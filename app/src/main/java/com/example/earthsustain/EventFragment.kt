@@ -28,14 +28,14 @@ class EventFragment : Fragment() {
 
         // Set an OnClickListener for buttons
         // Either progbtn or prog is clicked
-        val eventClick = View.OnClickListener {
+        val progClick = View.OnClickListener {
             val intent = Intent(requireContext(), EventActivity::class.java)
-            intent.putExtra("event", "approve")
+            intent.putExtra("programme", "approve")
             startActivity(intent)
         }
 
-        progbtn.setOnClickListener(eventClick)
-        prog.setOnClickListener(eventClick)
+        progbtn.setOnClickListener(progClick)
+        prog.setOnClickListener(progClick)
 
         // Either donabtn or dona is clicked
         val donaClick = View.OnClickListener {
