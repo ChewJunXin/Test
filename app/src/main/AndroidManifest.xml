@@ -25,15 +25,15 @@
                 android:value=""/>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="false">
         </activity>
         <activity
-            android:name=".DashActivity"
+            android:name=".activity.DashActivity"
             android:exported="false">
         </activity>
         <activity
-            android:name=".EventActivity"
+            android:name=".activity.EventActivity"
             android:exported="false">
         </activity>
     </application>

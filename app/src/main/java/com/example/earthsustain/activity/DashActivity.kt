@@ -1,4 +1,4 @@
-package com.example.earthsustain
+package com.example.earthsustain.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +11,10 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.earthsustain.MainActivity
+import com.example.earthsustain.fragment.ProfileFragment
+import com.example.earthsustain.R
+import com.example.earthsustain.fragment.HomeFragment
 import com.google.android.material.navigation.NavigationView
 
 class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
@@ -40,7 +44,10 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
 
 
-        val toggle = ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.open, R.string.close)
+        val toggle = ActionBarDrawerToggle(this,drawerLayout, toolbar,
+            R.string.open,
+            R.string.close
+        )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
