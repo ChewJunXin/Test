@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
+    tools:context=".MainActivity">
+
+    <!-- TextView for event title -->
+    <TextView
+        android:id="@+id/eventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Horizontal layout for eventDate, totalJoin, and joinbtn -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="10dp">
+
+        <!-- Left side for eventDate, totalJoin, and joinbtn -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#FFE599">
+
+            <!-- Centered TextView for event date -->
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Event Date: " />
+
+            <TextView
+                android:id="@+id/eventDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Dec 7, 2023" />
+
+            <TextView
+                android:id="@+id/totalJoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Total Join: 100" />
+
+            <!-- Delete button -->
+            <Button
+                android:id="@+id/joinbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Join" />
+
+        </LinearLayout>
+
+        <!-- Right side for description with ScrollView -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="5"
+                android:ellipsize="none"
+                android:scrollbars="vertical"
+                android:text="Your description goes here. It may contain many words and should scroll if necessary. Your description goes here. It may contain many words and should scroll if necessary. Your description goes here. It may contain many words and should scroll if necessary. Your description goes here. It may contain many words and should scroll if necessary. Your description goes here. It may contain many words and should scroll if necessary." />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
