@@ -12,7 +12,7 @@
         android:id="@+id/events"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="23dp"
         android:fontFamily="@font/acme"
         android:text="Popular Events"
@@ -58,7 +58,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="25dp"
-            android:text="Create" />
+            android:background="@drawable/custom_button_purple"
+            android:text="Create"
+            android:textColor="#FFFFFF" />
     </RelativeLayout>
 
     <ListView

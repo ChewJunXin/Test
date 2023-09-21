@@ -3,12 +3,15 @@ package com.example.earthsustain
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -17,13 +20,12 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_test)
+        setContentView(R.layout.activity_test_programme)
 
         // Find the ListView components
         val eventListView = findViewById<ListView>(R.id.eventlist)
         val myEventListView = findViewById<ListView>(R.id.myeventlist)
 
-        // Sample data for event list
         // Sample data for event list
         val events = mutableListOf("Event 1", "Event 2", "Event 3")
         val eventAdapter = EventAdapter(this, events)
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity(){
 
             val eventTitle = view.findViewById<TextView>(R.id.eventTitle)
             val joinButton = view.findViewById<Button>(R.id.joinbtn)
+            val descriptionTextView = view.findViewById<TextView>(R.id.description)
 
             val event = events[position]
 
@@ -74,6 +77,26 @@ class MainActivity : AppCompatActivity(){
                     joinEvent(position, joinButton)
                 }
             }
+
+            // Set an OnTouchListener to the descriptionTextView
+            descriptionTextView.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        // Disallow ListView to intercept touch events
+                        parent.requestDisallowInterceptTouchEvent(true)
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        // Allow ListView to intercept touch events
+                        parent.requestDisallowInterceptTouchEvent(false)
+                    }
+                }
+                // Handle the touch event in the TextView
+                v.onTouchEvent(event)
+                true
+            }
+
+            // Enable scrolling for descriptionTextView
+            descriptionTextView.movementMethod = ScrollingMovementMethod()
 
             return view
         }
@@ -117,10 +140,28 @@ class MainActivity : AppCompatActivity(){
             val eventTitle = view.findViewById<TextView>(R.id.eventTitle)
             val editButton = view.findViewById<Button>(R.id.editbtn)
             val deleteButton = view.findViewById<Button>(R.id.deletebtn)
+            val descriptionTextView = view.findViewById<TextView>(R.id.description)
 
             val event = myEvents[position]
 
             eventTitle.text = event
+
+            // Set an OnTouchListener to the eventTitle TextView
+            descriptionTextView.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        // Disallow ListView to intercept touch events
+                        parent.requestDisallowInterceptTouchEvent(true)
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        // Allow ListView to intercept touch events
+                        parent.requestDisallowInterceptTouchEvent(false)
+                    }
+                }
+                // Handle the touch event in the TextView
+                v.onTouchEvent(event)
+                true
+            }
 
             // Handle edit button click (implement your edit logic here)
             editButton.setOnClickListener {
@@ -131,6 +172,9 @@ class MainActivity : AppCompatActivity(){
             deleteButton.setOnClickListener {
                 showDeleteConfirmationDialog(position)
             }
+
+            // Enable scrolling for descriptionTextView
+            descriptionTextView.movementMethod = ScrollingMovementMethod()
 
             return view
         }

@@ -5,10 +5,74 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ProgFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/events"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="23dp"
+            android:fontFamily="@font/acme"
+            android:text="Popular Events"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="37dp"
+            tools:layout_editor_absoluteY="43dp" />
+
+        <ListView
+            android:id="@+id/eventlist"
+            android:layout_width="match_parent"
+            android:layout_height="254dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="28dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/underline"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/myevent"
+                android:fontFamily="@font/acme"
+                android:textSize="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Events"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="37dp"
+                tools:layout_editor_absoluteY="43dp" />
+
+            <!-- Button in parallel to "My Events" text -->
+            <Button
+                android:id="@+id/createbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/custom_button_purple"
+                android:text="Create"
+                android:textColor="#FFFFFF" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/myeventlist"
+            android:layout_width="match_parent"
+            android:layout_height="254dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="28dp" />
+
+    </LinearLayout>
 
 </FrameLayout>

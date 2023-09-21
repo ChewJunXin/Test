@@ -17,6 +17,7 @@ import com.example.earthsustain.R
 import com.example.earthsustain.fragment.DonateFragment
 import com.example.earthsustain.fragment.EventFragment
 import com.example.earthsustain.fragment.HomeFragment
+import com.example.earthsustain.fragment.ProgFragment
 import com.google.android.material.navigation.NavigationView
 
 class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
@@ -39,12 +40,13 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         // Check if data is not null
         if (programme != null) {
-            // Call the event function
+            // Call the programme activity
             toolbar.title = "Programme"
+            openFragment(ProgFragment())
         }
 
         if (donation != null) {
-            // Call the donation function
+            // Call the donation activity
             toolbar.title = "Donation"
             openFragment(DonateFragment())
         }

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants">
 
     <!-- TextView for event title -->
     <TextView
@@ -12,23 +13,63 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <!-- Centered TextView -->
-    <TextView
-        android:id="@+id/centeredText"
-        android:layout_width="wrap_content"
+    <!-- Horizontal layout for eventDate, totalJoin, and joinbtn -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Centered Text" />
+        android:orientation="horizontal"
+        android:layout_marginRight="10dp">
 
-    <!-- Centered TextView -->
-    <TextView
-        android:id="@+id/centeredhorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Centered Text" />
+        <!-- Left side for eventDate, totalJoin, and joinbtn -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FFE599"
+            android:orientation="vertical">
 
-    <!-- Buttons (Edit and Delete) -->
+            <!-- Centered TextView for event date -->
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Event Date: " />
+
+            <TextView
+                android:id="@+id/eventDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Dec 7, 2023" />
+
+            <TextView
+                android:id="@+id/totalJoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Total Join: 100" />
+        </LinearLayout>
+
+        <!-- Right side for description with ScrollView -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="#FFE599"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="5"
+                android:ellipsize="none"
+                android:scrollbars="vertical"
+                android:text="@string/testtext" />
+        </LinearLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,16 +79,22 @@
         <!-- Edit button -->
         <Button
             android:id="@+id/editbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit" />
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:text="Edit"
+            android:layout_marginTop="10dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/custom_button_green"/>/>
 
         <!-- Delete button -->
         <Button
             android:id="@+id/deletebtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_marginLeft="15dp"
-            android:text="Delete" />
+            android:layout_marginTop="10dp"
+            android:text="Delete"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/custom_button_blue"/>/>
     </LinearLayout>
 </LinearLayout>

@@ -9,11 +9,12 @@ import com.example.earthsustain.activity.EventActivity
 
 class MainActivity : AppCompatActivity(){
 
-    private val enteredDigits = mutableListOf<String>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        val descriptionTextView = findViewById<TextView>(R.id.description)
+//        descriptionTextView.movementMethod = ScrollingMovementMethod()
 
         val loginbtn = findViewById<TextView>(R.id.loginbtn)
         val signupbtn = findViewById<TextView>(R.id.signupbtn)
