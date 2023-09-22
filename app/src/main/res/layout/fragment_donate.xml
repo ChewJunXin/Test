@@ -45,7 +45,9 @@
             android:layout_height="wrap_content"
             android:text="Donate"
             android:layout_marginTop="15dp"
-            />
+            android:textColor="#FFFFFF"
+            android:background="@drawable/custom_button_blue"/>
+
 
     </LinearLayout>
 

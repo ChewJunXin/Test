@@ -17,6 +17,7 @@ import com.example.earthsustain.R
 import com.example.earthsustain.fragment.DonateFragment
 import com.example.earthsustain.fragment.EventFragment
 import com.example.earthsustain.fragment.HomeFragment
+import com.example.earthsustain.fragment.LoginFragment
 import com.example.earthsustain.fragment.ProgFragment
 import com.google.android.material.navigation.NavigationView
 
@@ -38,11 +39,20 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         val donation = intent.getStringExtra("donation")
 
+        val create = intent.getStringExtra("create")
+
+
         // Check if data is not null
         if (programme != null) {
             // Call the programme activity
             toolbar.title = "Programme"
             openFragment(ProgFragment())
+        }
+
+        if (create != null) {
+            // Call the programme activity
+            toolbar.title = "Create"
+            openFragment(LoginFragment())
         }
 
         if (donation != null) {

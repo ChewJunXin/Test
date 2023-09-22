@@ -1,5 +1,6 @@
 package com.example.earthsustain.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
@@ -14,7 +15,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import com.example.earthsustain.R
+import com.example.earthsustain.activity.EventActivity
 
 class ProgFragment : Fragment() {
 
@@ -44,6 +47,9 @@ class ProgFragment : Fragment() {
         // Handle create button click (implement your edit logic here)
         createButton.setOnClickListener {
             // Implement your edit logic here
+            val intent = Intent(requireContext(), EventActivity::class.java)
+            intent.putExtra("create", "approve")
+            startActivity(intent)
         }
 
         return view
@@ -197,4 +203,6 @@ class ProgFragment : Fragment() {
             alertDialog.show()
         }
     }
+
+
 }
