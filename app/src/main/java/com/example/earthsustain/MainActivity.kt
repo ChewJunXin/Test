@@ -1,6 +1,8 @@
 package com.example.earthsustain
 
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -15,8 +17,10 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.earthsustain.activity.EventActivity
 
 class MainActivity : AppCompatActivity(){
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,9 +42,19 @@ class MainActivity : AppCompatActivity(){
 
         val createButton = findViewById<Button>(R.id.createbtn)
 
+        val joinedButton = findViewById<Button>(R.id.joineventbtn)
+
         // Handle create button click (implement your edit logic here)
         createButton.setOnClickListener {
-            // Implement your edit logic here
+            val intent = Intent(this, EventActivity::class.java)
+            intent.putExtra("create", "approve")
+            startActivity(intent)
+        }
+
+        joinedButton.setOnClickListener {
+            val intent = Intent(this, EventActivity::class.java)
+            intent.putExtra("joined", "approve")
+            startActivity(intent)
         }
 
     }

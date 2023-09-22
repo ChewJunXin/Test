@@ -1,11 +1,11 @@
 package com.example.earthsustain.database
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+//import androidx.room.Entity
+//import androidx.room.PrimaryKey
 
-@Entity(tableName = "events")
+//@Entity(tableName = "events")
 data class Event(
-    @PrimaryKey(autoGenerate = true)
+//    @PrimaryKey(autoGenerate = true)
     val eventId: Long = 0,
     val eventTitle: String,
     val eventDate: String,

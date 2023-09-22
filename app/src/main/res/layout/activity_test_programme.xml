@@ -8,18 +8,37 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/events"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="23dp"
-        android:fontFamily="@font/acme"
-        android:text="Popular Events"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="37dp"
-        tools:layout_editor_absoluteY="43dp" />
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:id="@+id/events"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="23dp"
+            android:fontFamily="@font/acme"
+            android:text="Popular Events"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="37dp"
+            tools:layout_editor_absoluteY="43dp" />
+
+        <!-- Button in parallel to "Popular Events" text -->
+        <Button
+            android:id="@+id/joineventbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/custom_button_blue"
+            android:text="Event Join"
+            android:textColor="#FFFFFF" />
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/eventlist"
@@ -68,6 +87,20 @@
         android:layout_width="match_parent"
         android:layout_height="254dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="28dp"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/noEventsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="244dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="28dp"
+        android:text="There are not created events"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:visibility="gone"
+        />
+
 
 </LinearLayout>

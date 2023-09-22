@@ -18,6 +18,7 @@ import com.example.earthsustain.R
 import com.example.earthsustain.fragment.DonateFragment
 import com.example.earthsustain.fragment.EventFragment
 import com.example.earthsustain.fragment.HomeFragment
+import com.example.earthsustain.fragment.JoinEventFragment
 import com.example.earthsustain.fragment.LoginFragment
 import com.example.earthsustain.fragment.ProgFragment
 import com.google.android.material.navigation.NavigationView
@@ -42,6 +43,7 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         val create = intent.getStringExtra("create")
 
+        val joined = intent.getStringExtra("joined")
 
         // Check if data is not null
         if (programme != null) {
@@ -51,9 +53,15 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
 
         if (create != null) {
-            // Call the programme activity
+            // Call the create event activity
             toolbar.title = "Create"
             openFragment(LoginFragment())
+        }
+
+        if (joined != null) {
+            // Call the view joined events activity
+            toolbar.title = "My Joined Events"
+            openFragment(JoinEventFragment())
         }
 
         if (donation != null) {
