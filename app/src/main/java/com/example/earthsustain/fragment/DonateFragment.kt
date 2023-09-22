@@ -1,5 +1,6 @@
 package com.example.earthsustain.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -45,6 +47,10 @@ class DonateFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            // Hide the keyboard associated with donationAmountEditText
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(donationAmountEditText.windowToken, 0)
+
             // Clear the entered digits and reset the text of all EditTexts
             enteredDigits.clear()
 
@@ -80,7 +86,8 @@ class DonateFragment : Fragment() {
 
                 if (enteredPin == correctPin) {
                     // Correct PIN entered, process the donation
-                    val successMessage = "RM $amount Donate Successful!"
+                    val formattedAmount = String.format("%.2f", amount)
+                    val successMessage = "RM $formattedAmount Donate Successful!"
                     showToast(successMessage)
                 } else {
                     // Incorrect PIN entered, display an error message using Toast
