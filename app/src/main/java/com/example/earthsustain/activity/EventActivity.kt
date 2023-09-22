@@ -1,6 +1,7 @@
 package com.example.earthsustain.activity
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -110,11 +111,11 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
             R.id.nav_contact -> {
                 showToast("Contact Clicked")
-                openFragment(HomeFragment())
+                contactFunction()
             }
             R.id.nav_email -> {
                 showToast("Email Clicked")
-                openFragment(HomeFragment())
+                emailFunction()
             }
 
         }
@@ -139,5 +140,27 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
+    }
+
+    private fun contactFunction(){
+        val phoneNumber = "01112345678"
+
+        val formattedPhoneNumber = phoneNumber.replace(" ", "").replace("-", "")
+
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:$formattedPhoneNumber")
+
+        startActivity(intent)
+
+    }
+
+    private fun emailFunction(){
+        val emailAddress = "earthsustain2023@gmail.com"
+
+        val intent = Intent(Intent.ACTION_SENDTO)
+        intent.data = Uri.parse("mailto:$emailAddress")
+
+        startActivity(intent)
+
     }
 }
