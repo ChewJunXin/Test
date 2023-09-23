@@ -11,7 +11,7 @@ data class User(
     val password: String,
     val firstName: String,
     val lastName: String,
-    val phoneNumber: String
+    val phoneNumber: Int
 )
 
 @Entity(
@@ -20,7 +20,7 @@ data class User(
         ForeignKey(
             entity = User::class,
             parentColumns = ["email"],
-            childColumns = ["holder_email"],
+            childColumns = ["holderEmail"],
             onDelete = ForeignKey.CASCADE
         )
     ]
@@ -29,7 +29,7 @@ data class Wallet(
     @PrimaryKey(autoGenerate = true)
     val walletId: Long = 0,
     val amount: Double,
-    val pinCode: String,
+    val pinCode: Int,
     val holderEmail: String // This will be used to reference the User entity to get the user name
 )
 
@@ -39,7 +39,7 @@ data class Wallet(
         ForeignKey(
             entity = User::class,
             parentColumns = ["email"],
-            childColumns = ["holder_email"],
+            childColumns = ["cardHolderEmail"],
             onDelete = ForeignKey.CASCADE
         )
     ]
@@ -47,7 +47,7 @@ data class Wallet(
 data class Card(
     @PrimaryKey(autoGenerate = true)
     val cardId: Long = 0,
-    val cardNumber: String,
+    val cardNumber: Int,
     val cardType: String,
     val cardHolderEmail: String, // Reference to the User entity to get the user name
 )

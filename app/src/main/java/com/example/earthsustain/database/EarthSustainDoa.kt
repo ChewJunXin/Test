@@ -45,10 +45,11 @@ interface WalletDao {
 
     // Method to update the pinCode using walletId
     @Query("UPDATE wallets SET pinCode = :newPinCode WHERE walletId = :walletId")
-    suspend fun updatePinCodeByWalletId(walletId: Long, newPinCode: String)
+    suspend fun updatePinCodeByWalletId(walletId: Long, newPinCode: Int)
 
     @Query("DELETE FROM wallets WHERE walletId = :walletId")
     suspend fun deleteWallet(walletId: Long)
+
 }
 
 @Dao

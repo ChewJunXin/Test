@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(){
 //        descriptionTextView.movementMethod = ScrollingMovementMethod()
 
         val database = EarthSustainDatabase.getInstance(this)
-        val userDao = database.userDao
+        val userDao = database.walletDao
 
 
         val loginbtn = findViewById<TextView>(R.id.loginbtn)
