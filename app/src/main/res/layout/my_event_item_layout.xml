@@ -83,8 +83,8 @@
             android:layout_height="32dp"
             android:text="Edit"
             android:layout_marginTop="10dp"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/custom_button_green"/>/>
+            android:textColor="@color/white" />
+            android:background="@drawable/custom_button_green"/>
 
         <!-- Delete button -->
         <Button
@@ -94,7 +94,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:text="Delete"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/custom_button_blue"/>/>
+            android:textColor="@color/white" />
+            android:background="@drawable/custom_button_blue"/>
     </LinearLayout>
 </LinearLayout>

@@ -21,6 +21,8 @@ import com.example.earthsustain.activity.EventActivity
 
 class ProgFragment : Fragment() {
 
+    private lateinit var visible: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +52,15 @@ class ProgFragment : Fragment() {
             val intent = Intent(requireContext(), EventActivity::class.java)
             intent.putExtra("create", "approve")
             startActivity(intent)
+        }
+
+        val noEventsTextView = view.findViewById<TextView>(R.id.noEventsTextView)
+        val eventsList = view.findViewById<ListView>(R.id.myeventlist)
+
+        visible = "Yes"
+        if (visible == "Yes") {
+            eventsList.visibility = View.VISIBLE
+            noEventsTextView.visibility = View.GONE
         }
 
         return view
@@ -151,39 +162,41 @@ class ProgFragment : Fragment() {
             val deleteButton = view.findViewById<Button>(R.id.deletebtn)
             val descriptionTextView = view.findViewById<TextView>(R.id.description)
 
-            val event = myEvents[position]
+            if (visible == "Yes") {
+                val event = myEvents[position]
 
-            eventTitle.text = event
+                eventTitle.text = event
 
-            // Set an OnTouchListener to the eventTitle TextView
-            descriptionTextView.setOnTouchListener { _, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        // Disallow ListView to intercept touch events
-                        parent.requestDisallowInterceptTouchEvent(true)
+                // Set an OnTouchListener to the eventTitle TextView
+                descriptionTextView.setOnTouchListener { _, event ->
+                    when (event.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            // Disallow ListView to intercept touch events
+                            parent.requestDisallowInterceptTouchEvent(true)
+                        }
+
+                        MotionEvent.ACTION_UP -> {
+                            // Allow ListView to intercept touch events
+                            parent.requestDisallowInterceptTouchEvent(false)
+                        }
                     }
-                    MotionEvent.ACTION_UP -> {
-                        // Allow ListView to intercept touch events
-                        parent.requestDisallowInterceptTouchEvent(false)
-                    }
+                    // Handle the touch event in the TextView
+                    false
                 }
-                // Handle the touch event in the TextView
-                false
+
+                // Handle edit button click (implement your edit logic here)
+                editButton.setOnClickListener {
+                    // Implement your edit logic here
+                }
+
+                // Handle delete button click (implement your delete logic here)
+                deleteButton.setOnClickListener {
+                    showDeleteConfirmationDialog(position)
+                }
+
+                // Enable scrolling for descriptionTextView
+                descriptionTextView.movementMethod = ScrollingMovementMethod()
             }
-
-            // Handle edit button click (implement your edit logic here)
-            editButton.setOnClickListener {
-                // Implement your edit logic here
-            }
-
-            // Handle delete button click (implement your delete logic here)
-            deleteButton.setOnClickListener {
-                showDeleteConfirmationDialog(position)
-            }
-
-            // Enable scrolling for descriptionTextView
-            descriptionTextView.movementMethod = ScrollingMovementMethod()
-
             return view
         }
 

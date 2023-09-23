@@ -1,6 +1,7 @@
 package com.example.earthsustain
 
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -10,7 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -30,6 +33,17 @@ class MainActivity : AppCompatActivity(){
         val donationAmountEditText = findViewById<EditText>(R.id.donationAmountEditText)
         val donateButton = findViewById<Button>(R.id.donateButton)
 
+        // Handle Enter key press in donationAmountEditText
+        donationAmountEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // Handle the Enter key press here
+                // You can trigger your "Donate" button click action here
+                donateButton.performClick()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
         donateButton.setOnClickListener {
             val amountString = donationAmountEditText.text.toString()
             val amount = amountString.toDoubleOrNull() ?: 0.00
@@ -41,6 +55,13 @@ class MainActivity : AppCompatActivity(){
                 showToast("Maximum donation amount is 99999.99")
                 return@setOnClickListener
             } else if (amount >= 10 && amount <= 99999.99) {
+
+                // Clear the focus from donationAmountEditText to hide the keyboard
+                donationAmountEditText.clearFocus()
+
+                // Hide the keyboard explicitly
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(donationAmountEditText.windowToken, 0)
 
                 // Clear the entered digits and reset the text of all EditTexts
                 enteredDigits.clear()
@@ -76,9 +97,13 @@ class MainActivity : AppCompatActivity(){
                     val correctPin = "1234" // Replace with your actual PIN code
 
                     if (enteredPin == correctPin) {
+
                         // Correct PIN entered, process the donation
-                        val successMessage = "RM $amount Donate Successful!"
+                        val formattedAmount = String.format("%.2f", amount)
+                        val successMessage = "RM $formattedAmount Donate Successful!"
                         showToast(successMessage)
+
+
                     } else {
                         // Incorrect PIN entered, display an error message using Toast
                         val errorMessage = "Incorrect PIN Code"
@@ -97,6 +122,22 @@ class MainActivity : AppCompatActivity(){
                 }
 
                 val dialog = builder.create()
+
+                // Handle the Enter key press on digit4
+                digit4.setOnEditorActionListener { _, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        // Handle the Enter key press here
+                        // You can trigger your "OK" button click action here
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick()
+                        return@setOnEditorActionListener true
+                    }
+                    false
+                }
+
+                // Show the keyboard when the dialog is displayed
+                dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+
+
                 dialog.show()
 
                 // Use ViewTreeObserver to set focus after the dialog is displayed

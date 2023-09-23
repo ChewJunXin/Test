@@ -88,7 +88,7 @@
         android:layout_height="254dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="28dp"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/noEventsTextView"
@@ -99,8 +99,6 @@
         android:text="There are not created events"
         android:textStyle="italic"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         />
-
-
 </LinearLayout>

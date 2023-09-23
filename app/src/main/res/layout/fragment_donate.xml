@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:text="Enter donation amount (RM):"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:imeOptions="actionDone"/>
 
         <EditText
             android:id="@+id/donationAmountEditText"
@@ -37,7 +38,8 @@
             android:layout_marginTop="15dp"
             android:inputType="numberDecimal"
             android:textAlignment="center"
-            android:hint="(RM) Amount Donation"/>
+            android:hint="(RM) Amount Donation"
+            android:imeOptions="actionDone"/>
 
         <Button
             android:id="@+id/donateButton"
@@ -45,7 +47,7 @@
             android:layout_height="wrap_content"
             android:text="Donate"
             android:layout_marginTop="15dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:background="@drawable/custom_button_blue"/>
 
 

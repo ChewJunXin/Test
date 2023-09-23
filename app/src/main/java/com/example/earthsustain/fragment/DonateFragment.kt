@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -30,6 +32,16 @@ class DonateFragment : Fragment() {
         val donationAmountEditText = view.findViewById<EditText>(R.id.donationAmountEditText)
         val donateButton = view.findViewById<Button>(R.id.donateButton)
 
+        donationAmountEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // Handle the Enter key press here
+                // You can trigger your "Donate" button click action here
+                donateButton.performClick()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
         donateButton.setOnClickListener {
             val amountString = donationAmountEditText.text.toString()
 
@@ -47,7 +59,10 @@ class DonateFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // Hide the keyboard associated with donationAmountEditText
+            // Clear the focus from donationAmountEditText to hide the keyboard
+            donationAmountEditText.clearFocus()
+
+            // Hide the keyboard explicitly
             val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(donationAmountEditText.windowToken, 0)
 
@@ -80,6 +95,7 @@ class DonateFragment : Fragment() {
             digit1.isFocusableInTouchMode = true
             digit1.requestFocus()
 
+
             builder.setPositiveButton("OK") { _, _ ->
                 val enteredPin = enteredDigits.joinToString("")
                 val correctPin = "1234" // Replace with your actual PIN code
@@ -107,12 +123,31 @@ class DonateFragment : Fragment() {
             }
 
             val dialog = builder.create()
+
+
+            // Handle the Enter key press on digit4
+            digit4.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // Handle the Enter key press here
+                    // You can trigger your "OK" button click action here
+                    val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                    positiveButton.performClick()
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+
+            // Show the keyboard when the dialog is displayed
+            dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+
             dialog.show()
 
             // Use ViewTreeObserver to set focus after the dialog is displayed
             dialog.window?.decorView?.viewTreeObserver?.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    dialog.window?.decorView?.viewTreeObserver?.removeOnGlobalLayoutListener(this)
+                    dialog.window?.decorView?.viewTreeObserver?.removeOnGlobalLayoutListener(
+                        this
+                    )
                     // Set focus to the first digit field (digit1) after a short delay
                     digit1.post {
                         digit1.isFocusableInTouchMode = true
@@ -186,6 +221,8 @@ class DonateFragment : Fragment() {
                 }
                 false
             })
+
+
         }
     }
 

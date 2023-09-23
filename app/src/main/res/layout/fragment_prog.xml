@@ -16,7 +16,7 @@
             android:layout_marginTop="23dp"
             android:layout_marginLeft="10dp">
 
-        <TextView
+            <TextView
                 android:id="@+id/events"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -29,9 +29,9 @@
                 tools:layout_editor_absoluteX="37dp"
                 tools:layout_editor_absoluteY="43dp" />
 
-            <!-- Button in parallel to "My Events" text -->
+            <!-- Button in parallel to "Popular Events" text -->
             <Button
-                android:id="@+id/myjoinbtn"
+                android:id="@+id/joineventbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -89,8 +89,20 @@
             android:layout_width="match_parent"
             android:layout_height="254dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="28dp" />
+            android:layout_marginTop="28dp"
+            android:visibility="gone"/>
 
+        <TextView
+            android:id="@+id/noEventsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="244dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="28dp"
+            android:text="There are not created events"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:visibility="visible"
+            />
     </LinearLayout>
 
 </FrameLayout>

@@ -34,7 +34,8 @@
         android:layout_marginTop="15dp"
         android:inputType="numberDecimal"
         android:textAlignment="center"
-        android:hint="(RM) Amount Donation"/>
+        android:hint="(RM) Amount Donation"
+        android:imeOptions="actionDone"/>
 
     <Button
         android:id="@+id/donateButton"
