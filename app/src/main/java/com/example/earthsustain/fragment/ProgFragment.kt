@@ -48,7 +48,7 @@ class ProgFragment : Fragment() {
 
         // Handle create button click (implement your edit logic here)
         createButton.setOnClickListener {
-            // Implement your edit logic here
+            // Implement create button
             val intent = Intent(requireContext(), EventActivity::class.java)
             intent.putExtra("create", "approve")
             startActivity(intent)
@@ -186,7 +186,10 @@ class ProgFragment : Fragment() {
 
                 // Handle edit button click (implement your edit logic here)
                 editButton.setOnClickListener {
-                    // Implement your edit logic here
+                    // Implement edit button
+                    val intent = Intent(requireContext(), EventActivity::class.java)
+                    intent.putExtra("edit", "approve")
+                    startActivity(intent)
                 }
 
                 // Handle delete button click (implement your delete logic here)

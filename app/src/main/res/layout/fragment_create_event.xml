@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.CreateEventFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="291dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="8dp"
+            android:text="Enter your event title:"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/eventTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Enter your event title"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="291dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="8dp"
+            android:text="Enter your event description:"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:inputType="textMultiLine"/>
+
+        <EditText
+            android:id="@+id/eventDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Enter your event description"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="258dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="32dp"
+            android:text="Choose your event date:"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <DatePicker
+            android:id="@+id/eventDate"
+            android:layout_width="333dp"
+            android:layout_height="338dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/createbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Create Event"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_button_purple"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>

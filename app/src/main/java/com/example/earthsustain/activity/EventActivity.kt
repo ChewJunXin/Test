@@ -15,7 +15,9 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.earthsustain.MainActivity
 import com.example.earthsustain.fragment.ProfileFragment
 import com.example.earthsustain.R
+import com.example.earthsustain.fragment.CreateEventFragment
 import com.example.earthsustain.fragment.DonateFragment
+import com.example.earthsustain.fragment.EditEventFragment
 import com.example.earthsustain.fragment.EventFragment
 import com.example.earthsustain.fragment.HomeFragment
 import com.example.earthsustain.fragment.JoinEventFragment
@@ -43,6 +45,8 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         val create = intent.getStringExtra("create")
 
+        val edit = intent.getStringExtra("edit")
+
         val joined = intent.getStringExtra("joined")
 
         // Check if data is not null
@@ -54,8 +58,14 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         if (create != null) {
             // Call the create event activity
-            toolbar.title = "Create"
-            openFragment(LoginFragment())
+            toolbar.title = "Create Event"
+            openFragment(CreateEventFragment())
+        }
+
+        if (edit != null) {
+            // Call the create event activity
+            toolbar.title = "Edit Event"
+            openFragment(EditEventFragment())
         }
 
         if (joined != null) {
