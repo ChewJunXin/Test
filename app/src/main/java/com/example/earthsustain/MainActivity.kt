@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.Room
 import com.example.earthsustain.activity.DashActivity
 import com.example.earthsustain.activity.EventActivity
 import com.example.earthsustain.activity.LoginActivity
