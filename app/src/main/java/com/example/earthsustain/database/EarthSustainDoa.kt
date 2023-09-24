@@ -100,6 +100,18 @@ package com.example.earthsustain.database
 //    // Method to delete an event based on organiserEmail and eventId
 //    @Query("DELETE FROM events WHERE organiserEmail = :organiserEmail AND eventId = :eventId")
 //    suspend fun deleteEvent(organiserEmail: String, eventId: Long)
+
+//      // Method to retrieve all events based on joinerEmail
+//      @Query("SELECT * FROM events WHERE joinerEmail = :joinerEmail")
+//      suspend fun getEventsByJoinerEmail(joinerEmail: String): List<Event>
+//
+//      // Method to retrieve events based on joinerEmail and eventStatus
+//      @Query("SELECT * FROM events WHERE joinerEmail = :joinerEmail AND eventStatus = :eventStatus")
+//      suspend fun getEventsByJoinerEmailAndStatus(joinerEmail: String, eventStatus: String): List<Event>
+//
+//      // Method to set eventStatus based on eventId
+//      @Query("UPDATE events SET eventStatus = :eventStatus WHERE eventId = :eventId")
+//      suspend fun setEventStatus(eventId: Long, eventStatus: String)
 //}
 //
 //@Dao

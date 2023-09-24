@@ -49,8 +49,11 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         val joined = intent.getStringExtra("joined")
 
+        val joinevent = intent.getStringExtra("joinevent")
+
+
         // Check if data is not null
-        if (programme != null) {
+        if (programme != null || joinevent != null) {
             // Call the programme activity
             toolbar.title = "Programme"
             openFragment(ProgFragment())

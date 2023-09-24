@@ -70,6 +70,8 @@ package com.example.earthsustain.database
 //    val eventDate: String,
 //    val eventDescription: String,
 //    val totalJoin: Int,
+//    val joinerEmail: String,
+//    val eventStatus: String,
 //    val organiserEmail: String
 //)
 //
