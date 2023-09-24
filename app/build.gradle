@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-//    id 'kotlin-kapt'
+    id 'kotlin-kapt' // Apply Kotlin Kapt Plugin
 }
 
 android {
@@ -16,7 +16,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -31,7 +30,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-
     }
 
     buildFeatures{
@@ -40,7 +38,6 @@ android {
 }
 
 dependencies {
-
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -49,19 +46,13 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation "com.google.android.material:material:1.9.0"
 
-//    // Room database
-//    implementation 'androidx.room:room-runtime:2.4.0'
-//    kapt 'androidx.room:room-compiler:2.4.0'
-//
-//    // Kotlin Extensions for Room
-//    implementation 'androidx.room:room-ktx:2.4.0'
-//
-//    // Coroutines Support for Room
-//    implementation 'androidx.room:room-coroutines:2.4.0'
-//
-//    // If need LiveData support
-//    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.4.0'
-//    implementation 'androidx.lifecycle:lifecycle-livedata:2.4.0'
-
+    // Room Database Dependencies
+    implementation "androidx.room:room-runtime:2.4.1"
+    kapt "androidx.room:room-compiler:2.4.1"
+    // Optional: For Coroutine support
+    implementation "androidx.room:room-ktx:2.4.1"
+    // Optional: For RxJava support
+    implementation "androidx.room:room-rxjava3:2.4.1"
 }

@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.earthsustain.activity.EventActivity
+import com.example.earthsustain.activity.SocialActivity
+import com.example.earthsustain.activity.WalletActivity
 import com.example.earthsustain.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -24,6 +26,18 @@ class HomeFragment : Fragment() {
         // Set an OnClickListener for eventbtn
         binding.eventbtn.setOnClickListener {
             val intent = Intent(requireActivity(), EventActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Set an OnClickListener for eventbtn
+        binding.socialbtn.setOnClickListener {
+            val intent = Intent(requireActivity(), SocialActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Set an OnClickListener for eventbtn
+        binding.walletbtn.setOnClickListener {
+            val intent = Intent(requireActivity(), WalletActivity::class.java)
             startActivity(intent)
         }
 
