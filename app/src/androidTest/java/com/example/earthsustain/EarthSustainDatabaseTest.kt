@@ -21,7 +21,7 @@ class EarthSustainDatabaseTest {
     private lateinit var cardDao: CardDao
     private lateinit var eventDao: EventDao
     private lateinit var donationDao: DonationDao
-    private lateinit var blog: BlogDao
+    private lateinit var blogDao: BlogDao
     private lateinit var newsDao: NewsDao
 
 
@@ -31,7 +31,12 @@ class EarthSustainDatabaseTest {
         db = Room.inMemoryDatabaseBuilder(context, EarthSustainDatabase::class.java).build()
         userDao = db.userDao
         walletDao = db.walletDao
-        // Initialize other DAOs as needed
+        cardDao = db.cardDao
+        eventDao = db.eventDao
+        donationDao = db.donationDao
+        blogDao = db.blogDao
+        newsDao = db.newsDao
+
     }
 
     @After
@@ -40,14 +45,13 @@ class EarthSustainDatabaseTest {
     }
 
     @Test
-    fun testInsertAndRetrieveUser() = runBlocking {
-        val user = User(email = "test@example.com", password = "password", firstName = "Test", lastName = "User", phoneNumber = 1234567890)
+    suspend fun testInsertAndRetrieveUser()  {
+        val user = User("earthsustain2023@gmail.com","earthsustain2023","Earth", "Sustain",  1212345679)
         userDao.insertUser(user)
-        val retrievedUser = userDao.getUserByEmail("test@example.com")
+        val retrievedUser = userDao.getUserByEmail("earthsustain2023@gmail.com")
         assertNotNull(retrievedUser)
         assertEquals(user, retrievedUser)
     }
 
-    // Add more test cases for other DAOs and entities
 
 }
