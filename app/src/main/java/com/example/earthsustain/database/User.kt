@@ -20,5 +20,5 @@ data class User(
     val lastName: String,
 
     @ColumnInfo(name = "phonenumber")
-    val phoneNumber: Int
+    val phoneNumber: String
 )
