@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [User::class, Wallet::class, Card::class, Event::class, Donation::class, Blog::class, News::class], version = 1, exportSchema = false)
-//@Database(entities = [User::class, Wallet::class, Card::class], version = 1, exportSchema = false)
 
 abstract class EarthSustainDatabase : RoomDatabase() {
 

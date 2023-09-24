@@ -8,6 +8,8 @@ import android.widget.TextView
 import com.example.earthsustain.activity.DashActivity
 import com.example.earthsustain.activity.EventActivity
 import com.example.earthsustain.activity.LoginActivity
+import com.example.earthsustain.database.EarthSustainDatabase
+
 //import com.example.earthsustain.database.EarthSustainDatabase
 
 class MainActivity : AppCompatActivity(){
@@ -20,7 +22,9 @@ class MainActivity : AppCompatActivity(){
 //        descriptionTextView.movementMethod = ScrollingMovementMethod()
 
 //        val database = EarthSustainDatabase.getInstance(this)
-//        val userDao = database.walletDao
+//        val userDao = database.userDao
+//
+//        userDao.getUserByEmail("dsafa")
 
 //
 //        val loginbtn = findViewById<TextView>(R.id.loginbtn)
