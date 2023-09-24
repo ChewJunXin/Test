@@ -10,16 +10,16 @@ import androidx.room.Update
 interface NewsDao {
 
     @Insert
-    suspend fun insert(news: News)
+    fun insert(news: News)
 
     // Method to update news based on newsId
     @Update
-    suspend fun update(news: News)
+    fun update(news: News)
 
     @Delete
-    suspend fun delete(news: News)
+    fun delete(news: News)
 
     @Query("SELECT * FROM news WHERE newsId = :newsId")
-    suspend fun getNewsById(newsId: Long): News?
+    fun getNewsById(newsId: Long): News
 
 }

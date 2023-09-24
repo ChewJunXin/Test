@@ -8,15 +8,15 @@ import androidx.room.Update
 @Dao
 interface DonationDao {
     @Insert
-    suspend fun insert(donation: Donation)
+    fun insert(donation: Donation)
 
     @Query("SELECT * FROM donations WHERE donationId = :donationId")
-    suspend fun getDonationById(donationId: Long): Donation?
+    fun getDonationById(donationId: Long): Donation?
 
     @Query("SELECT * FROM donations WHERE donateUserEmail = :donateUserEmail")
-    suspend fun getDonationsByUserEmail(donateUserEmail: String): List<Donation>
+    fun getDonationsByUserEmail(donateUserEmail: String): List<Donation>
 
     // Method to retrieve all donation records
     @Query("SELECT * FROM donations")
-    suspend fun getAllDonations(): List<Donation>
+    fun getAllDonations(): List<Donation>
 }

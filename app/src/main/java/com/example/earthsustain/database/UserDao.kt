@@ -11,18 +11,17 @@ import androidx.room.Update
 interface UserDao{
 
     @Insert
-    suspend fun insertUser(user: User)
+    fun insertUser(user: User)
 
     @Update
-    suspend fun updateUser(user: User)
-
+    fun updateUser(user: User)
 
     @Query("SELECT * FROM users WHERE email = :email")
-    suspend fun getUserByEmail(email: String): User?
+    fun getUserByEmail(email: String): User
 
     @Query("UPDATE users SET password = :newPassword WHERE email = :email")
-    suspend fun updatePassword(email: String, newPassword: String)
+    fun updatePassword(email: String, newPassword: String)
 
     @Query("DELETE FROM users WHERE email = :email")
-    suspend fun deleteUserByEmail(email: String)
+    fun deleteUserByEmail(email: String)
 }

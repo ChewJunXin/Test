@@ -9,7 +9,7 @@ class EarthSustainRepository(private val database: EarthSustainDatabase) {
         database.userDao.insertUser(user)
     }
 
-    suspend fun getUserByEmail(email: String): User? {
+    fun getUserByEmail(email: String): User? {
         return database.userDao.getUserByEmail(email)
     }
 
@@ -17,11 +17,11 @@ class EarthSustainRepository(private val database: EarthSustainDatabase) {
         database.userDao.updateUser(user)
     }
 
-    suspend fun updatePassword(email: String, newPassword: String) {
+    fun updatePassword(email: String, newPassword: String) {
         database.userDao.updatePassword(email, newPassword)
     }
 
-    suspend fun deleteUserByEmail(email: String) {
+    fun deleteUserByEmail(email: String) {
         database.userDao.deleteUserByEmail(email)
     }
 
@@ -30,27 +30,27 @@ class EarthSustainRepository(private val database: EarthSustainDatabase) {
         database.walletDao.insertWallet(wallet)
     }
 
-    suspend fun getAllWallets(): List<Wallet> {
+    fun getAllWallets(): List<Wallet> {
         return database.walletDao.getAllWallets()
     }
 
-    suspend fun getWalletsByHolderEmail(holderEmail: String): List<Wallet> {
+    fun getWalletsByHolderEmail(holderEmail: String): List<Wallet> {
         return database.walletDao.getWalletsByHolderEmail(holderEmail)
     }
 
-    suspend fun getWalletIdByHolderEmail(holderEmail: String): Long? {
+    fun getWalletIdByHolderEmail(holderEmail: String): Long? {
         return database.walletDao.getWalletIdByHolderEmail(holderEmail)
     }
 
-    suspend fun updateAmountByWalletId(walletId: Long, newAmount: Double) {
+    fun updateAmountByWalletId(walletId: Long, newAmount: Double) {
         database.walletDao.updateAmountByWalletId(walletId, newAmount)
     }
 
-    suspend fun updatePinCodeByWalletId(walletId: Long, newPinCode: Int) {
+    fun updatePinCodeByWalletId(walletId: Long, newPinCode: Int) {
         database.walletDao.updatePinCodeByWalletId(walletId, newPinCode)
     }
 
-    suspend fun deleteWallet(walletId: Long) {
+    fun deleteWallet(walletId: Long) {
         database.walletDao.deleteWallet(walletId)
     }
 
@@ -59,19 +59,19 @@ class EarthSustainRepository(private val database: EarthSustainDatabase) {
         database.cardDao.insertCard(card)
     }
 
-    suspend fun getAllCards(): List<Card> {
+    fun getAllCards(): List<Card> {
         return database.cardDao.getAllCards()
     }
 
-    suspend fun getCardsByHolderEmail(cardHolderEmail: String): List<Card> {
+    fun getCardsByHolderEmail(cardHolderEmail: String): List<Card> {
         return database.cardDao.getCardsByHolderEmail(cardHolderEmail)
     }
 
-    suspend fun deleteCard(cardId: Long) {
+    fun deleteCard(cardId: Long) {
         database.cardDao.deleteCard(cardId)
     }
 
-    suspend fun deleteCardByHolderEmailAndNumber(cardHolderEmail: String, cardNumber: String) {
+    fun deleteCardByHolderEmailAndNumber(cardHolderEmail: String, cardNumber: String) {
         database.cardDao.deleteCardByHolderEmailAndNumber(cardHolderEmail, cardNumber)
     }
 
@@ -88,15 +88,15 @@ class EarthSustainRepository(private val database: EarthSustainDatabase) {
         database.eventDao.delete(event)
     }
 
-    suspend fun getEventById(eventId: Long): Event? {
+    fun getEventById(eventId: Long): Event? {
         return database.eventDao.getEventById(eventId)
     }
 
-    suspend fun getEventsByOrganiserEmail(organiserEmail: String): List<Event> {
+    fun getEventsByOrganiserEmail(organiserEmail: String): List<Event> {
         return database.eventDao.getEventsByOrganiserEmail(organiserEmail)
     }
 
-    suspend fun updateTotalJoin(eventId: Long, newTotalJoin: Int) {
+    fun updateTotalJoin(eventId: Long, newTotalJoin: Int) {
         database.eventDao.updateTotalJoin(eventId, newTotalJoin)
     }
 
@@ -107,15 +107,15 @@ class EarthSustainRepository(private val database: EarthSustainDatabase) {
         database.donationDao.insert(donation)
     }
 
-    suspend fun getDonationById(donationId: Long): Donation? {
+    fun getDonationById(donationId: Long): Donation? {
         return database.donationDao.getDonationById(donationId)
     }
 
-    suspend fun getDonationsByUserEmail(donateUserEmail: String): List<Donation> {
+    fun getDonationsByUserEmail(donateUserEmail: String): List<Donation> {
         return database.donationDao.getDonationsByUserEmail(donateUserEmail)
     }
 
-    suspend fun getAllDonations(): List<Donation> {
+    fun getAllDonations(): List<Donation> {
         return database.donationDao.getAllDonations()
     }
 
@@ -132,15 +132,15 @@ class EarthSustainRepository(private val database: EarthSustainDatabase) {
         database.blogDao.delete(blog)
     }
 
-    suspend fun getBlogById(blogId: Long): Blog? {
+    fun getBlogById(blogId: Long): Blog? {
         return database.blogDao.getBlogById(blogId)
     }
 
-    suspend fun getBlogsByAuthorEmail(authorEmail: String): List<Blog> {
+    fun getBlogsByAuthorEmail(authorEmail: String): List<Blog> {
         return database.blogDao.getBlogsByAuthorEmail(authorEmail)
     }
 
-    suspend fun updateTotalComment(blogId: Long, newTotalComment: Int) {
+    fun updateTotalComment(blogId: Long, newTotalComment: Int) {
         database.blogDao.updateTotalComment(blogId, newTotalComment)
     }
 
@@ -159,7 +159,7 @@ class EarthSustainRepository(private val database: EarthSustainDatabase) {
         database.newsDao.delete(news)
     }
 
-    suspend fun getNewsById(newsId: Long): News? {
+    fun getNewsById(newsId: Long): News? {
         return database.newsDao.getNewsById(newsId)
     }
 }
