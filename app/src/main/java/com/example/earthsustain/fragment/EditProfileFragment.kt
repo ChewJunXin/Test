@@ -11,33 +11,24 @@ import com.example.earthsustain.R
 import com.example.earthsustain.activity.EventActivity
 import com.example.earthsustain.activity.LoginActivity
 
-class ProfileFragment : Fragment() {
+class EditProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val editButton = view.findViewById<Button>(R.id.editProfileButton)
+        val save = view.findViewById<Button>(R.id.saveButton)
 
-        editButton.setOnClickListener {
+        save.setOnClickListener {
             // Create an Intent to navigate to the password recovery screen (or any other activity)
             val intent = Intent(requireActivity(), EventActivity::class.java)
-            intent.putExtra("openEditProfile", true)
-            startActivity(intent)
-        }
-
-        val changePassword = view.findViewById<Button>(R.id.changePasswordButton)
-
-        changePassword.setOnClickListener {
-            // Create an Intent to navigate to the password recovery screen (or any other activity)
-            val intent = Intent(requireActivity(), EventActivity::class.java)
-            intent.putExtra("openChangePassword", true)
+            intent.putExtra("openProfile", true)
             startActivity(intent)
         }
     }

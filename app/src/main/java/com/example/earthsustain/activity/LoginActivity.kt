@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -14,6 +15,10 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.earthsustain.fragment.LoginFragment
 import com.example.earthsustain.MainActivity
 import com.example.earthsustain.R
+import com.example.earthsustain.fragment.AdminViewUserProfileFragment
+import com.example.earthsustain.fragment.PasswordFragment
+import com.example.earthsustain.fragment.RecoverPasswordFragment
+import com.example.earthsustain.fragment.SignupFragment
 import com.google.android.material.navigation.NavigationView
 
 class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
@@ -49,9 +54,15 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         navigationView.setNavigationItemSelectedListener(this)
 
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             fragmentManager = supportFragmentManager
-            openFragment(LoginFragment())
+            val fragmentToOpen = when {
+                intent.getBooleanExtra("openSignup", false) -> SignupFragment()
+                intent.getBooleanExtra("openForgetPassword", false) -> PasswordFragment()
+                intent.getBooleanExtra("openRecoverPassword", false) -> RecoverPasswordFragment()
+                else -> LoginFragment()
+            }
+            openFragment(fragmentToOpen)
         }
     }
 
@@ -68,15 +79,15 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
             R.id.nav_register -> {
                 showToast("Register Clicked")
-                openFragment(LoginFragment())
+                openFragment(SignupFragment())
             }
             R.id.nav_forget -> {
                 showToast("Forget Password Clicked")
-                openFragment(LoginFragment())
+                openFragment(PasswordFragment())
             }
             R.id.nav_contact -> {
                 showToast("Contact Clicked")
-                openFragment(LoginFragment())
+                openFragment(AdminViewUserProfileFragment())
             }
             R.id.nav_email -> {
                 showToast("Email Clicked")
@@ -106,5 +117,4 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
     }
-
 }
