@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.earthsustain.R
 import com.example.earthsustain.activity.EventActivity
 import com.example.earthsustain.activity.LoginActivity
+import com.example.earthsustain.database.User
 import com.example.earthsustain.database.UserViewModel
 
 class LoginFragment : Fragment() {
@@ -32,6 +33,7 @@ class LoginFragment : Fragment() {
         val signUpButton = view.findViewById<Button>(R.id.signUpButton)
 
         signUpButton.setOnClickListener {
+
                 // Create an Intent to navigate to the password recovery screen (or any other activity)
                 val intent = Intent(requireActivity(), LoginActivity::class.java)
                 intent.putExtra("openSignup", true)

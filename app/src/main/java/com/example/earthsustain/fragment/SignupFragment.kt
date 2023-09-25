@@ -1,3 +1,4 @@
+
 package com.example.earthsustain.fragment
 
 import android.content.Intent
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.earthsustain.R
 import com.example.earthsustain.activity.LoginActivity
+import com.example.earthsustain.database.User
 import com.example.earthsustain.database.UserViewModel
 import com.google.android.material.textfield.TextInputLayout
 
@@ -30,7 +32,7 @@ class SignupFragment : Fragment() {
     private lateinit var passwordTextInputLayout: TextInputLayout
     private lateinit var confirmPasswordTextInputLayout: TextInputLayout
 
-    private lateinit var userViewModel: UserViewModel
+    lateinit var userViewModel: UserViewModel
 
 
 
@@ -54,11 +56,19 @@ class SignupFragment : Fragment() {
         passwordTextInputLayout = view.findViewById(R.id.passwordTextInputLayout)
         confirmPasswordTextInputLayout = view.findViewById(R.id.confirmPasswordTextInputLayout)
 
+        val firstName = firstNameEditText.text.toString()
+        val lastName = lastNameEditText.text.toString()
+        val phone = phoneNumberEditText.text.toString()
+        val email = emailEditText.text.toString()
+        val password = passwordEditText.text.toString()
+
         // Set an OnClickListener for the Sign Up button
         signUpButton.setOnClickListener {
             // Perform validation here
             if (validateForm()) {
                 // Registration is valid, you can proceed with registration
+                val user = User(0, firstName, lastName, phone, email, password) // Create a User object with user data
+                userViewModel.insertUser(user)
                 Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show()
                 val intent = Intent(requireActivity(), LoginActivity::class.java)
                 startActivity(intent)
