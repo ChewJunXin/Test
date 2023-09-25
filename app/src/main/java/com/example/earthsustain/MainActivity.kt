@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import com.example.earthsustain.activity.EventActivity
 import com.example.earthsustain.activity.LoginActivity
 import com.example.earthsustain.database.User
@@ -19,12 +20,26 @@ class MainActivity : AppCompatActivity(){
     private lateinit var database : DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
-//        database = FirebaseDatabase.getInstance().getReference("Users")
-//
-//        val user = User("earthsustain2023@gmail.com", "password", "EarthSustain", "", "01234567898")
-//        database.child("earthsustain2023@gmail.com".replace(".", ",")).setValue(user)
+        val loginbtn = findViewById<TextView>(R.id.loginbtn)
+
+
+        loginbtn.setOnClickListener{
+            database = FirebaseDatabase.getInstance().getReference("Users")
+
+            val user = User("xuanjie.jong@gmail.com", "jong1234", "Xuan Jie", "Jong", "01232443678")
+            val child = user.email.replace(".", ",")
+
+            database.child(child).setValue(user).addOnSuccessListener {
+                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
+                Toast.makeText(this, FirebaseDatabase.getInstance().toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
 
 
 //        database = FirebaseDatabase.getInstance().getReference("Wallets")
