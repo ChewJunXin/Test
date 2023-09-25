@@ -27,7 +27,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+       //userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         val signUpButton = view.findViewById<Button>(R.id.signUpButton)
 

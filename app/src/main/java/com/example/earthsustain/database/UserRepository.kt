@@ -24,6 +24,6 @@ class UserRepository(private val userDao: UserDao, private val databaseReference
     }
 
     suspend fun getAllUsers(): List<User> {
-        return userDao.getAllUsers()
+        return userDao.getAll()
     }
 }
