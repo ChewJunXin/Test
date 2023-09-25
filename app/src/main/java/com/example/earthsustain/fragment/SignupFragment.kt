@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.earthsustain.R
 import com.example.earthsustain.activity.LoginActivity
+import com.example.earthsustain.database.UserViewModel
 import com.google.android.material.textfield.TextInputLayout
 
 
@@ -28,6 +30,9 @@ class SignupFragment : Fragment() {
     private lateinit var passwordTextInputLayout: TextInputLayout
     private lateinit var confirmPasswordTextInputLayout: TextInputLayout
 
+    private lateinit var userViewModel: UserViewModel
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +40,8 @@ class SignupFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_signup, container, false)
+
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         // Initialize UI elements
         emailEditText = view.findViewById(R.id.emailEditText)
