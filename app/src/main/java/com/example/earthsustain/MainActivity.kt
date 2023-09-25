@@ -4,6 +4,7 @@ package com.example.earthsustain
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import com.example.earthsustain.activity.EventActivity
@@ -25,18 +26,22 @@ class MainActivity : AppCompatActivity(){
 
         val loginbtn = findViewById<TextView>(R.id.loginbtn)
 
+        database = FirebaseDatabase.getInstance().getReference("Users")
+
+        val user = User("xuanjie.jong@gmail.com", "jong1234", "Xuan Jie", "Jong", "01232443678")
+        val child = user.email.replace(".", ",")
+
 
         loginbtn.setOnClickListener{
-            database = FirebaseDatabase.getInstance().getReference("Users")
 
-            val user = User("xuanjie.jong@gmail.com", "jong1234", "Xuan Jie", "Jong", "01232443678")
-            val child = user.email.replace(".", ",")
-
-            database.child(child).setValue(user).addOnSuccessListener {
+            database.child(child).setValue(user)
+                .addOnSuccessListener {
                 Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener {
+            }
+                .addOnFailureListener {
                 Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show()
             }
+
 
         }
 
