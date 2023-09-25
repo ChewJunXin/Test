@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "38764470650",
+    "project_id": "earthsustaindatabase-d0ea8",
+    "storage_bucket": "earthsustaindatabase-d0ea8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38764470650:android:d98b48a947eb2a69b7b6c3",
+        "android_client_info": {
+          "package_name": "com.example.earthsustain"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfmhLOo55yHybEumer71FmMLcVXEGJ6ig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
