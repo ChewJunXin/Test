@@ -13,9 +13,14 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.earthsustain.R
 import com.example.earthsustain.activity.LoginActivity
+import com.example.earthsustain.database.AppDatabase
 import com.example.earthsustain.database.User
+import com.example.earthsustain.database.UserRepository
 import com.example.earthsustain.database.UserViewModel
+import com.example.earthsustain.database.UserViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class SignupFragment : Fragment() {
@@ -42,7 +47,11 @@ class SignupFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_signup, container, false)
 
-        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+        val userDao = AppDatabase.getDatabase(requireContext()).userDao()
+        val userRepository = UserRepository(userDao, databaseReference)
+        val viewModelFactory = UserViewModelFactory(userRepository)
+        userViewModel = ViewModelProvider(this, viewModelFactory).get(UserViewModel::class.java)
 
         // Initialize UI elements
         emailEditText = view.findViewById(R.id.emailEditText)
