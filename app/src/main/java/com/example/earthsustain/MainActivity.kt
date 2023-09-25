@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(){
             database.child(child).setValue(user).addOnSuccessListener {
                 Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
-                Toast.makeText(this, FirebaseDatabase.getInstance().toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show()
             }
 
         }
