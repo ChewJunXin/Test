@@ -1,6 +1,7 @@
 package com.example.earthsustain.fragment
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Patterns
 import androidx.fragment.app.Fragment
@@ -9,14 +10,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.earthsustain.R
 import com.example.earthsustain.activity.LoginActivity
 import com.example.earthsustain.database.User
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.UploadTask
 
 
 class SignupFragment : Fragment() {
@@ -31,10 +42,16 @@ class SignupFragment : Fragment() {
     private lateinit var signUpButton: Button
     private lateinit var passwordTextInputLayout: TextInputLayout
     private lateinit var confirmPasswordTextInputLayout: TextInputLayout
+    private lateinit var profileImageView: ImageView
+    private lateinit var browseImageButton: Button
+    private lateinit var uri:Uri
+
+
 
     // Declare firebase
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var dbReference: DatabaseReference
+    private var storageRef = Firebase.storage
 
 
     override fun onCreateView(
@@ -54,9 +71,13 @@ class SignupFragment : Fragment() {
         signUpButton = view.findViewById(R.id.signUpButton)
         passwordTextInputLayout = view.findViewById(R.id.passwordTextInputLayout)
         confirmPasswordTextInputLayout = view.findViewById(R.id.confirmPasswordTextInputLayout)
+        profileImageView =  view.findViewById(R.id.profileImageView)
+        browseImageButton =  view.findViewById(R.id.browseImageButton)
+
 
         firebaseAuth = FirebaseAuth.getInstance()
         dbReference = FirebaseDatabase.getInstance().getReference("Users")
+        storageRef = FirebaseStorage.getInstance()
 
         // Set an OnClickListener for the Sign Up button
         signUpButton.setOnClickListener {
@@ -64,6 +85,20 @@ class SignupFragment : Fragment() {
             if (validateForm()) {
                 saveUserData()
             }
+        }
+
+        val galleryImage = registerForActivityResult(
+            ActivityResultContracts.GetContent(),
+            ActivityResultCallback {
+                profileImageView.setImageURI(it)
+                if (it != null) {
+                    uri = it
+                }
+            }
+        )
+
+        browseImageButton.setOnClickListener{
+            galleryImage.launch("image/*")
         }
 
         return view
@@ -124,24 +159,90 @@ class SignupFragment : Fragment() {
         val lastName = lastNameEditText.text.toString().trim()
         val phoneNumber = phoneNumberEditText.text.toString().trim()
 
-        val emailKey = email.replace(".", ",")
-        val user = User( email, password, firstName, lastName, phoneNumber)
+        // Get a reference to the "Users" node in Firebase Realtime Database
+        val usersDatabase = FirebaseDatabase.getInstance().getReference("Users")
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener() {
-            if (it.isSuccessful) {
-                dbReference.child(emailKey).setValue(user).addOnCompleteListener() {
-                    Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT)
-                        .show()
-                    val intent = Intent(requireActivity(), LoginActivity::class.java)
-                    startActivity(intent)
-                }.addOnFailureListener {
-                    Toast.makeText(requireContext(), "Registration Failed", Toast.LENGTH_SHORT)
-                        .show()
+        // Read all child nodes under "Users" to find the next available ID
+        usersDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val usedIds = mutableSetOf<String>()
+
+                // Iterate through all child nodes and add their keys to the set
+                for (childSnapshot in dataSnapshot.children) {
+                    val key = childSnapshot.key
+                    if (key != null) {
+                        usedIds.add(key)
+                    }
                 }
-            } else {
-                Toast.makeText(requireContext(), "This Email has been used", Toast.LENGTH_SHORT).show()
+
+                // Find the smallest missing ID
+                var newIdNumber = 1
+                while (usedIds.contains("U00$newIdNumber")) {
+                    newIdNumber++
+                }
+
+                // Format the new ID
+                val Id = "U00$newIdNumber"
+
+                // Continue with saving user data and the generated ID
+                val imageRef =
+                    storageRef.getReference("images").child(System.currentTimeMillis().toString())
+
+                imageRef.putFile(uri).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Image upload is successful, get the download URL
+                        imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                            // Now you can use downloadUri.toString() to get the download URL
+                            val imageUrl = downloadUri.toString()
+
+                            val user = User(
+                                email,
+                                password,
+                                firstName,
+                                lastName,
+                                phoneNumber,
+                                imageUrl,
+                                Id
+                            )
+                            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener() {
+                                    if (it.isSuccessful) {
+                                        // Save user data with the generated ID
+                                        usersDatabase.child(Id).setValue(user)
+                                            .addOnCompleteListener() {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Registration Successful",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                val intent = Intent(
+                                                    requireActivity(),
+                                                    LoginActivity::class.java
+                                                )
+                                                startActivity(intent)
+                                            }.addOnFailureListener {
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Registration Failed",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                                }
+
+                        }
+                    }
+                }
             }
 
-        }
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle error
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to read data: ${databaseError.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 }

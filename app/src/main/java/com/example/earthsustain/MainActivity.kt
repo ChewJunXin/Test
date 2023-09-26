@@ -27,10 +27,10 @@ class MainActivity : AppCompatActivity(){
         val loginbtn = findViewById<TextView>(R.id.loginbtn)
         val signupbtn = findViewById<TextView>(R.id.signupbtn)
 
-        database = FirebaseDatabase.getInstance().getReference("Users")
+        //database = FirebaseDatabase.getInstance().getReference("Users")
 
-        val user = User("xuanjie.jong@gmail.com", "jong1234", "Xuan Jie", "Jong", "01232443678")
-        val child = user.email.replace(".", ",")
+        //val user = User("xuanjie.jong@gmail.com", "jong1234", "Xuan Jie", "Jong", "01232443678")
+        //val child = user.email.replace(".", ",")
 
         loginbtn.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)

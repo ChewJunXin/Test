@@ -15,7 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.earthsustain.R
 import com.example.earthsustain.activity.EventActivity
 import com.example.earthsustain.activity.LoginActivity
+import com.example.earthsustain.database.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -34,9 +40,7 @@ class ProfileFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profile, container, false)
 
 
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    }override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         nameText = view.findViewById(R.id.nameText)
@@ -60,26 +64,40 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
-        val uid = Firebase.auth.currentUser?.email
-        val emailKey = uid!!.replace(".", ",")
-        val uidRef = Firebase.database.reference.child("Users").child(emailKey)
-        uidRef.get().addOnCompleteListener {
-            if (it.isSuccessful) {
-                val result = it.result
-                val firstName = result.child("firstName").getValue(String::class.java)
-                val lastName = result.child("lastName").getValue(String::class.java)
-                val fullName = "$firstName $lastName"
-                val email = result.child("email").getValue(String::class.java)
-                val phoneNumber = result.child("phoneNumber").getValue(String::class.java)
+        val currentUser = FirebaseAuth.getInstance().currentUser
 
-                nameText.text = "$fullName"
-                emailText.text = "Email: $email"
-                phoneText.text = "Phone Number: $phoneNumber"
+        if (currentUser != null) {
+            val userEmail = currentUser.email // Get the email of the currently logged-in user
+            val newEmail = userEmail?.replace(".", "_")
 
+            val emailToCustomIdRef = FirebaseDatabase.getInstance().getReference("Users")
 
-            } else {
-                Log.d(TAG, "${it.exception?.message}") //Never ignore potential errors!
+            // Listen for changes and retrieve data based on the user's email
+            if (newEmail != null) {
+                emailToCustomIdRef.child(newEmail).addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            val firstName = dataSnapshot.child("firstName").getValue(String::class.java)
+                            val lastName = dataSnapshot.child("lastName").getValue(String::class.java)
+                            val fullName = "$firstName $lastName"
+                            val email = dataSnapshot.child("email").getValue(String::class.java)
+                            val phoneNumber = dataSnapshot.child("phoneNumber").getValue(String::class.java)
+
+                            nameText.text = fullName
+                            emailText.text = "Email: $email"
+                            phoneText.text = "Phone Number: $phoneNumber"
+                        } else {
+                            // Handle the case where the user data for the logged-in user doesn't exist
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // Handle error
+                    }
+                })
             }
         }
     }
+
+
 }

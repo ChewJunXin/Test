@@ -6,7 +6,8 @@ data class User(
     val firstName: String = "",
     val lastName: String = "",
     val phoneNumber: String = "",
-
+    val imageLink: String ="",
+    val userId:String = ""
 
 )
 
