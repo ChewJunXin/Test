@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.earthsustain.R
 import com.example.earthsustain.activity.EventActivity
 import com.example.earthsustain.activity.LoginActivity
@@ -31,6 +33,7 @@ class ProfileFragment : Fragment() {
     private lateinit var nameText: TextView
     private lateinit var phoneText: TextView
     private lateinit var emailText: TextView
+    private lateinit var profilePicture: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +49,7 @@ class ProfileFragment : Fragment() {
         nameText = view.findViewById(R.id.nameText)
         emailText = view.findViewById(R.id.emailText)
         phoneText = view.findViewById(R.id.phoneText)
+        profilePicture = view.findViewById(R.id.profilePicture)
         val editButton = view.findViewById<Button>(R.id.editProfileButton)
 
         editButton.setOnClickListener {
@@ -68,36 +72,37 @@ class ProfileFragment : Fragment() {
 
         if (currentUser != null) {
             val userEmail = currentUser.email // Get the email of the currently logged-in user
-            val newEmail = userEmail?.replace(".", "_")
 
-            val emailToCustomIdRef = FirebaseDatabase.getInstance().getReference("Users")
+            // Reference to the custom user ID node in Firebase Realtime Database
+            val usersRef = FirebaseDatabase.getInstance().getReference("Users")
 
             // Listen for changes and retrieve data based on the user's email
-            if (newEmail != null) {
-                emailToCustomIdRef.child(newEmail).addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            val firstName = dataSnapshot.child("firstName").getValue(String::class.java)
-                            val lastName = dataSnapshot.child("lastName").getValue(String::class.java)
-                            val fullName = "$firstName $lastName"
-                            val email = dataSnapshot.child("email").getValue(String::class.java)
-                            val phoneNumber = dataSnapshot.child("phoneNumber").getValue(String::class.java)
+            usersRef.orderByChild("email").equalTo(userEmail).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (userSnapshot in dataSnapshot.children) {
+                            val user = userSnapshot.getValue(User::class.java)
+                            if (user != null) {
+                                val fullName = "${user.firstName} ${user.lastName}"
+                                nameText.text = fullName
+                                emailText.text = "Email: ${user.email}"
+                                phoneText.text = "Phone Number: ${user.phoneNumber}"
 
-                            nameText.text = fullName
-                            emailText.text = "Email: $email"
-                            phoneText.text = "Phone Number: $phoneNumber"
-                        } else {
-                            // Handle the case where the user data for the logged-in user doesn't exist
+                                // Load and display the profile picture using Glide
+                                Glide.with(requireContext())
+                                    .load(user.imageLink) // Assuming "imageLink" contains the download URL of the image
+                                    .into(profilePicture)
+                            }
                         }
+                    } else {
+                        // Handle the case where the user data for the logged-in user doesn't exist
                     }
+                }
 
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        // Handle error
-                    }
-                })
-            }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Handle error
+                }
+            })
         }
     }
-
-
 }
