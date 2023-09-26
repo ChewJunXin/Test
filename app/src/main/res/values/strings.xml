@@ -8,4 +8,24 @@
 The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- CJX -->
+    <string name="hint_email">Email</string>
+    <string name="text_forgetPassword">Forget Password?</string>
+    <string name="text_login">Login</string>
+    <string name="text_loginDesc">Enter your email address and password to access your account</string>
+    <string name="text_loginPageSignDesc">Don\'t have an account?</string>
+    <string name="hint_password">password</string>
+    <string name="register_title">Register an Account</string>
+    <string name="text_signupDesc">Enter your personal information to register your account</string>
+    <string name="hint_repassword">Re-enter Password</string>
+    <string name="hint_name">First name</string>
+    <string name="hint_lastName">Last Name</string>
+    <string name="hint_phone">Phone Number</string>
+    <string name="text_signup">Sign Up</string>
+    <string name="back_button">Back Button</string>
+    <string name="title_passwordView">Recovery Password</string>
+    <string name="text_passwordDesc">Enter your email address to recover your password</string>
+    <string name="text_recPassDesc">Enter your new password</string>
+    <string name="button_recoverPass">Recover Password</string>
 </resources>

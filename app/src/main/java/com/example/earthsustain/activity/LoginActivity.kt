@@ -1,10 +1,10 @@
 package com.example.earthsustain.activity
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -15,7 +15,11 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.earthsustain.fragment.LoginFragment
 import com.example.earthsustain.MainActivity
 import com.example.earthsustain.R
+
+import com.example.earthsustain.fragment.SignupFragment
 import com.google.android.material.navigation.NavigationView
+
+
 
 class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
 
@@ -50,9 +54,15 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         navigationView.setNavigationItemSelectedListener(this)
 
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             fragmentManager = supportFragmentManager
-            openFragment(LoginFragment())
+            val fragmentToOpen = when {
+                intent.getBooleanExtra("openSignup", false) -> SignupFragment()
+                //intent.getBooleanExtra("openForgetPassword", false) -> PasswordFragment()
+                //intent.getBooleanExtra("openRecoverPassword", false) -> RecoverPasswordFragment()
+                else -> LoginFragment()
+            }
+            openFragment(fragmentToOpen)
         }
     }
 
@@ -69,19 +79,19 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
             R.id.nav_register -> {
                 showToast("Register Clicked")
-                openFragment(LoginFragment())
+                openFragment(SignupFragment())
             }
             R.id.nav_forget -> {
                 showToast("Forget Password Clicked")
-                openFragment(LoginFragment())
+                //openFragment(PasswordFragment())
             }
             R.id.nav_contact -> {
                 showToast("Contact Clicked")
-                contactFunction()
+                //openFragment(AdminViewUserProfileFragment())
             }
             R.id.nav_email -> {
                 showToast("Email Clicked")
-                emailFunction()
+                openFragment(LoginFragment())
             }
 
         }
@@ -107,27 +117,4 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
     }
-
-    private fun contactFunction(){
-        val phoneNumber = "01112345678"
-
-        val formattedPhoneNumber = phoneNumber.replace(" ", "").replace("-", "")
-
-        val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:$formattedPhoneNumber")
-
-        startActivity(intent)
-
-    }
-
-    private fun emailFunction(){
-        val emailAddress = "earthsustain2023@gmail.com"
-
-        val intent = Intent(Intent.ACTION_SENDTO)
-        intent.data = Uri.parse("mailto:$emailAddress")
-
-        startActivity(intent)
-
-    }
-
 }

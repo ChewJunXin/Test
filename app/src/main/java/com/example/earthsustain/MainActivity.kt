@@ -25,27 +25,32 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
 
         val loginbtn = findViewById<TextView>(R.id.loginbtn)
+        val signupbtn = findViewById<TextView>(R.id.signupbtn)
 
         database = FirebaseDatabase.getInstance().getReference("Users")
 
         val user = User("xuanjie.jong@gmail.com", "jong1234", "Xuan Jie", "Jong", "01232443678")
         val child = user.email.replace(".", ",")
 
-
         loginbtn.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
 
-            database.child(child).setValue(user)
-                .addOnSuccessListener {
-                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
-            }
-                .addOnFailureListener {
-                Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show()
-            }
-
+            startActivity(intent)
 
         }
 
-
+        signupbtn.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.putExtra("openSignup", true)
+            startActivity(intent)
+        }
+//            database.child(child).setValue(user)
+//                .addOnSuccessListener {
+//                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+//            }
+//                .addOnFailureListener {
+//                Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show()
+//            }
 
 //        database = FirebaseDatabase.getInstance().getReference("Wallets")
 //
