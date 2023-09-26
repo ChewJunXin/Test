@@ -56,7 +56,7 @@ class SignupFragment : Fragment() {
         confirmPasswordTextInputLayout = view.findViewById(R.id.confirmPasswordTextInputLayout)
 
         firebaseAuth = FirebaseAuth.getInstance()
-        dbReference = FirebaseDatabase.getInstance().getReference("User")
+        dbReference = FirebaseDatabase.getInstance().getReference("Users")
 
         // Set an OnClickListener for the Sign Up button
         signUpButton.setOnClickListener {
@@ -124,12 +124,12 @@ class SignupFragment : Fragment() {
         val lastName = lastNameEditText.text.toString().trim()
         val phoneNumber = phoneNumberEditText.text.toString().trim()
 
-        val userID = dbReference.push().key!!
-        val user = User(userID, email, password, firstName, lastName, phoneNumber)
+        val emailKey = email.replace(".", ",")
+        val user = User( email, password, firstName, lastName, phoneNumber)
 
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener() {
             if (it.isSuccessful) {
-                dbReference.child(userID).setValue(user).addOnCompleteListener() {
+                dbReference.child(emailKey).setValue(user).addOnCompleteListener() {
                     Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent(requireActivity(), LoginActivity::class.java)
