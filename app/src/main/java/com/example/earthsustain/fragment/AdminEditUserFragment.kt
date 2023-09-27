@@ -1,6 +1,7 @@
 package com.example.earthsustain.fragment
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -30,128 +31,104 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
 class AdminEditUserFragment (private val user: User) : Fragment() {
-    private lateinit var firstNameEditText: EditText
-    private lateinit var lastNameEditText: EditText
-    private lateinit var phoneNumberEditText: EditText
-    private lateinit var updateButton: Button
     private lateinit var profileImageView: ImageView
     private lateinit var browseImageButton: Button
-
-    private lateinit var auth: FirebaseAuth
-    private lateinit var databaseReference: DatabaseReference
+    private lateinit var updateButton: Button
     private lateinit var storageRef: StorageReference
-    private lateinit var uri: Uri
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var uri:Uri
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_admin_edit_user, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        firstNameEditText = view.findViewById(R.id.firstNameEditText)
-        lastNameEditText = view.findViewById(R.id.lastNameEditText)
-        phoneNumberEditText = view.findViewById(R.id.phoneNumberEditText)
-        updateButton = view.findViewById(R.id.updateButton)
         profileImageView = view.findViewById(R.id.profileImageView)
-       //browseImageButton = view.findViewById(R.id.browseButton)
-
-        auth = FirebaseAuth.getInstance()
-        databaseReference = FirebaseDatabase.getInstance().reference
+        browseImageButton = view.findViewById(R.id.browseButton)
+        updateButton = view.findViewById(R.id.updateButton)
         storageRef = FirebaseStorage.getInstance().reference
+        databaseReference = FirebaseDatabase.getInstance().reference.child("Users").child(user.userId)
 
-        firstNameEditText.setText(user.firstName)
-        lastNameEditText.setText(user.lastName)
-        phoneNumberEditText.setText(user.phoneNumber)
+        // Set the visibility of other views to GONE
+        view.findViewById<EditText>(R.id.firstNameEditText).visibility = View.GONE
+        view.findViewById<EditText>(R.id.lastNameEditText).visibility = View.GONE
+        view.findViewById<EditText>(R.id.phoneNumberEditText).visibility = View.GONE
+        view.findViewById<EditText>(R.id.emailEditText).visibility = View.GONE
 
-        Glide.with(requireContext())
-            .load(user.imageLink)
-            .into(profileImageView)
+        Glide.with(requireContext()).load(user.imageLink).into(profileImageView)
 
-
-        updateButton.setOnClickListener {
-            if (validateForm()) {
-                updateUserData()
-            }
-        }
-    }
-
-    private fun validateForm(): Boolean {
-        val firstName = firstNameEditText.text.toString().trim()
-        val lastName = lastNameEditText.text.toString().trim()
-        val phoneNumber = phoneNumberEditText.text.toString().trim()
-
-        if (firstName.isEmpty()) {
-            firstNameEditText.error = "Enter the first name"
-            firstNameEditText.requestFocus()
-            return false
-        }
-
-        if (lastName.isEmpty()) {
-            lastNameEditText.error = "Enter the last name"
-            lastNameEditText.requestFocus()
-            return false
-        }
-
-        if (phoneNumber.isEmpty() || !phoneNumber.matches(Regex("\\d{10,12}"))) {
-            phoneNumberEditText.error = "Enter a valid phone number (10-12 digits)"
-            phoneNumberEditText.requestFocus()
-            return false
-        }
-
-        return true
-    }
-
-    private fun updateProfileImage(imageUri: Uri) {
-        val userRef = databaseReference.child("Users").child(user.userId)
-        val imageRef = storageRef.child("images/${System.currentTimeMillis()}")
-
-        imageRef.putFile(imageUri)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    imageRef.downloadUrl.addOnCompleteListener { downloadUrlTask ->
-                        if (downloadUrlTask.isSuccessful) {
-                            val newImageUrl = downloadUrlTask.result.toString()
-                            userRef.child("imageLink").setValue(newImageUrl)
-                            profileImageView.setImageURI(imageUri)
-                        } else {
-                            // Handle the case where getting the download URL fails
-                        }
-                    }
-                } else {
-                    // Handle the case where image upload fails
+        val galleryImage = registerForActivityResult(
+            ActivityResultContracts.GetContent(),
+            ActivityResultCallback {
+                profileImageView.setImageURI(it)
+                if (it != null) {
+                    uri = it
                 }
             }
-    }
-
-    private fun updateUserData() {
-        val firstName = firstNameEditText.text.toString().trim()
-        val lastName = lastNameEditText.text.toString().trim()
-        val phoneNumber = phoneNumberEditText.text.toString().trim()
-
-        val userRef = databaseReference.child("Users").child(user.userId)
-
-        val updatedUser = User(
-            user.email,
-            user.password,
-            firstName,
-            lastName,
-            phoneNumber,
-            user.imageLink,
-            user.userId
         )
 
-        userRef.setValue(updatedUser)
-            .addOnCompleteListener { task ->
+        browseImageButton.setOnClickListener{
+            galleryImage.launch("image/*")
+        }
+
+        updateButton.setOnClickListener {
+            val imageRef =
+                FirebaseStorage.getInstance().getReference("images").child(System.currentTimeMillis().toString())
+
+            imageRef.putFile(uri).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(requireContext(), "User profile updated successfully", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Failed to update user profile", Toast.LENGTH_SHORT).show()
+                    // Image upload is successful, get the download URL
+                    imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                        val updatedImageUrl = downloadUri.toString()
+                        updateUser(
+                            requireContext(),
+                            user,
+                            user.firstName,
+                            user.lastName,
+                            user.phoneNumber,
+                            user.email,
+                            updatedImageUrl,
+                            user.userId
+                        )
+                    }
                 }
+            } ?: run {
+                Toast.makeText(requireContext(), "No image selected", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun updateUser(
+        context: Context,
+        user: User,
+        updatedFirstName: String,
+        updatedLastName: String,
+        updatedPhoneNumber: String,
+        updatedEmail: String,
+        updatedImageUrl: String,
+        userId: String
+    ) {
+        val dbRef = FirebaseDatabase.getInstance().getReference("Users").child(userId)
+
+        val updatedUser = User(
+            userId,
+            updatedEmail,
+            user.password,
+            updatedFirstName,
+            updatedLastName,
+            updatedPhoneNumber,
+            updatedImageUrl,
+        )
+
+        dbRef.setValue(updatedUser).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(context, "User data updated successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Failed to update user data", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

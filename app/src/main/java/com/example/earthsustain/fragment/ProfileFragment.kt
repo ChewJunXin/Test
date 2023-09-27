@@ -86,7 +86,8 @@ class ProfileFragment : Fragment() {
                                 val fullName = "${user.firstName} ${user.lastName}"
                                 nameText.text = fullName
                                 emailText.text = "Email: ${user.email}"
-                                phoneText.text = "Phone Number: ${user.phoneNumber}"
+                                val formattedPhoneNumber = StringBuilder(user.phoneNumber).insert(3, "-").toString()
+                                phoneText.text = "Phone Number: $formattedPhoneNumber"
 
                                 // Load and display the profile picture using Glide
                                 Glide.with(requireContext())

@@ -49,11 +49,26 @@
             android:maxLines="1"
             android:layout_marginBottom="16dp"/>
 
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:layout_marginBottom="16dp"/>
+
+
         <Button
             android:id="@+id/browseButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Select Image"/>
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update"/>
 
     </LinearLayout>
 </ScrollView>

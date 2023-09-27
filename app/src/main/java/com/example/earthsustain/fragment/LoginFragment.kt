@@ -85,36 +85,34 @@ class LoginFragment : Fragment() {
 
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    if (email == "earthsustain2023@gmail.com") {
-                        // Navigate to a different fragment when the email matches
-                        val intent = Intent(
-                            requireActivity(),
-                            AdminActivity::class.java
-                        )
-                        intent.putExtra("openViewProfile", true)
-                        startActivity(intent)
-                        requireActivity().finish()
-                    } else {
-                        // Password synchronization logic
-                        val currentUser = firebaseAuth.currentUser
-                        if (currentUser != null) {
-                            val userEmail =
-                                currentUser.email // Get the email of the currently logged-in user
+                    val currentUser = firebaseAuth.currentUser
+                    if (currentUser != null) {
+                        val userEmail = currentUser.email // Get the email of the currently logged-in user
 
-                            // Reference to the custom user ID node in Firebase Realtime Database
-                            val usersRef = databaseReference.child("Users")
+                        // Reference to the custom user ID node in Firebase Realtime Database
+                        val usersRef = databaseReference.child("Users")
 
-                            // Listen for changes and retrieve data based on the user's email
-                            usersRef.orderByChild("email").equalTo(userEmail)
-                                .addListenerForSingleValueEvent(object : ValueEventListener {
-                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                        if (dataSnapshot.exists()) {
-                                            for (userSnapshot in dataSnapshot.children) {
-                                                val user = userSnapshot.getValue(User::class.java)
-                                                if (user != null) {
-                                                    // Assuming you have a "userId" field in your User class
-                                                    val userId = user.userId
+                        // Listen for changes and retrieve data based on the user's email
+                        usersRef.orderByChild("email").equalTo(userEmail)
+                            .addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        for (userSnapshot in dataSnapshot.children) {
+                                            val user = userSnapshot.getValue(User::class.java)
+                                            if (user != null) {
+                                                // Assuming you have a "userId" field in your User class
+                                                val userId = user.userId
 
+                                                if (userId == "A001") {
+                                                    // Navigate to AdminActivity
+                                                    val intent = Intent(
+                                                        requireActivity(),
+                                                        AdminActivity::class.java
+                                                    )
+                                                    intent.putExtra("openViewProfile", true)
+                                                    startActivity(intent)
+                                                    requireActivity().finish()
+                                                } else {
                                                     // Now, update the password for this user based on the custom user ID
                                                     updatePasswordInRealtimeDatabase(
                                                         userId,
@@ -136,21 +134,17 @@ class LoginFragment : Fragment() {
                                                     requireActivity().finish()
                                                 }
                                             }
-                                        } else {
-                                            // Handle the case where the user data for the logged-in user doesn't exist
                                         }
+                                    } else {
+                                        // Handle the case where the user data for the logged-in user doesn't exist
                                     }
+                                }
 
-                                    override fun onCancelled(databaseError: DatabaseError) {
-                                        // Handle error
-                                    }
-                                })
-                        }
-
+                                override fun onCancelled(databaseError: DatabaseError) {
+                                    // Handle error
+                                }
+                            })
                     }
-
-                } else {
-                    Toast.makeText(requireContext(), "Login Failed", Toast.LENGTH_SHORT).show()
                 }
             }
         }

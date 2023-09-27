@@ -44,7 +44,7 @@ class SignupFragment : Fragment() {
     private lateinit var confirmPasswordTextInputLayout: TextInputLayout
     private lateinit var profileImageView: ImageView
     private lateinit var browseImageButton: Button
-    private lateinit var uri:Uri
+    private var uri: Uri? = null // Initialize uri as nullable
 
 
 
@@ -149,6 +149,7 @@ class SignupFragment : Fragment() {
             return false
         }
 
+
         return true
     }
 
@@ -184,56 +185,108 @@ class SignupFragment : Fragment() {
                 // Format the new ID
                 val Id = "U00$newIdNumber"
 
-                // Continue with saving user data and the generated ID
-                val imageRef =
+                val imageRef = if (uri != null) {
+                    // Use the user-uploaded image if available
                     storageRef.getReference("images").child(System.currentTimeMillis().toString())
+                } else {
+                    // Use a default image if the user didn't upload an image
+                    val defaultImageUrl = "https://firebasestorage.googleapis.com/v0/b/earthsustaindatabase-d0ea8.appspot.com/o/images%2F1695850269225?alt=media&token=e33f6c6f-a5cc-40fa-8515-45f7946ac909"
+                    Uri.parse(defaultImageUrl).let { Firebase.storage.getReferenceFromUrl(it.toString()) }
+                }
 
-                imageRef.putFile(uri).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        // Image upload is successful, get the download URL
-                        imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                            // Now you can use downloadUri.toString() to get the download URL
-                            val imageUrl = downloadUri.toString()
+                // Check if the user uploaded an image
+                if (uri != null) {
+                    imageRef.putFile(uri!!).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Image upload is successful, get the download URL
+                            imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                                // Now you can use downloadUri.toString() to get the download URL
+                                val imageUrl = downloadUri.toString()
 
-                            val user = User(
-                                email,
-                                password,
-                                firstName,
-                                lastName,
-                                phoneNumber,
-                                imageUrl,
-                                Id
-                            )
-                            firebaseAuth.createUserWithEmailAndPassword(email, password)
-                                .addOnCompleteListener() {
-                                    if (it.isSuccessful) {
-                                        // Save user data with the generated ID
-                                        usersDatabase.child(Id).setValue(user)
-                                            .addOnCompleteListener() {
-                                                Toast.makeText(
-                                                    requireContext(),
-                                                    "Registration Successful",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                val intent = Intent(
-                                                    requireActivity(),
-                                                    LoginActivity::class.java
-                                                )
-                                                startActivity(intent)
-                                            }.addOnFailureListener {
-                                            Toast.makeText(
-                                                requireContext(),
-                                                "Registration Failed",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                val user = User(
+                                    Id,
+                                    email,
+                                    password,
+                                    firstName,
+                                    lastName,
+                                    phoneNumber,
+                                    imageUrl
+                                )
+
+                                // Continue with user registration using the uploaded image URL
+                                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener() {
+                                        if (it.isSuccessful) {
+                                            // Save user data with the generated ID
+                                            usersDatabase.child(Id).setValue(user)
+                                                .addOnCompleteListener() {
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        "Registration Successful",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                    val intent = Intent(
+                                                        requireActivity(),
+                                                        LoginActivity::class.java
+                                                    )
+                                                    startActivity(intent)
+                                                }.addOnFailureListener {
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        "Registration Failed",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
                                         }
                                     }
-                                }
-
+                            }
+                        } else {
+                            // Handle the case where image upload fails
+                            // ...
                         }
                     }
+                } else {
+                    // User didn't upload an image, use the default image URL
+                    val defaultImageUrl = "https://firebasestorage.googleapis.com/v0/b/earthsustaindatabase-d0ea8.appspot.com/o/images%2F1695850269225?alt=media&token=e33f6c6f-a5cc-40fa-8515-45f7946ac909"
+                    val user = User(
+                        Id,
+                        email,
+                        password,
+                        firstName,
+                        lastName,
+                        phoneNumber,
+                        defaultImageUrl
+                    )
+
+                    // Continue with user registration using the default image URL
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener() {
+                            if (it.isSuccessful) {
+                                // Save user data with the generated ID
+                                usersDatabase.child(Id).setValue(user)
+                                    .addOnCompleteListener() {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Registration Successful",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        val intent = Intent(
+                                            requireActivity(),
+                                            LoginActivity::class.java
+                                        )
+                                        startActivity(intent)
+                                    }.addOnFailureListener {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Registration Failed",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            }
+                        }
                 }
             }
+
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle error

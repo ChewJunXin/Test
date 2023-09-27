@@ -27,6 +27,24 @@ class MainActivity : AppCompatActivity(){
         val loginbtn = findViewById<TextView>(R.id.loginbtn)
         val signupbtn = findViewById<TextView>(R.id.signupbtn)
 
+        database = FirebaseDatabase.getInstance().getReference("Users")
+        val user = User("A001", "earthsustain2023@gmail.com", "earthsustain_2023", "Earth", "Sustain", "01133543533", "profile")
+        val user1 = User("U001", "xuanjie.jong@gmail.com", "jong1234", "Xuan Jie", "Jong", "01232443678", "profile")
+        val user2 = User("U002", "junxin.chew@gmail.com", "chew1234", "Jun Xin", "Chew", "01237645444", "profile")
+        val user3 = User("U003", "zhihong.ho@gmail.com", "ho1234", "Zhi Hong", "Ho", "01265756768", "profile")
+        val user4 = User("U004", "laifah.tan@gmail.com", "tan1234", "Lai Fah", "Tan", "01152432334", "profile")
+
+        val usersMap = mapOf(
+            "A001" to user,
+            "U001" to user1,
+            "U002" to user2,
+            "U003" to user3,
+            "U004" to user4
+        )
+
+        database.updateChildren(usersMap)
+
+
         //database = FirebaseDatabase.getInstance().getReference("Users")
 
         //val user = User("xuanjie.jong@gmail.com", "jong1234", "Xuan Jie", "Jong", "01232443678")

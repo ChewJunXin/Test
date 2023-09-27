@@ -181,13 +181,13 @@ class EditProfileFragment : Fragment() {
 
         val dbRef = FirebaseDatabase.getInstance().getReference("Users").child(id)
         val newUser = User(
+            id,
             email,
             password,
             firstName,
             lastName,
             phoneNumber,
-            imageUrl,
-            id
+            imageUrl
         )
 
         // Update the user's data in the database
