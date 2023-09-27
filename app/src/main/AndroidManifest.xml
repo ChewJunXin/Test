@@ -36,6 +36,13 @@
             android:name=".activity.EventActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".activity.AdminActivity"
+            android:exported="false">
+        </activity>
+
+
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

@@ -15,6 +15,9 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.earthsustain.fragment.LoginFragment
 import com.example.earthsustain.MainActivity
 import com.example.earthsustain.R
+import com.example.earthsustain.database.User
+import com.example.earthsustain.fragment.AdminEditUserFragment
+import com.example.earthsustain.fragment.AdminViewUserFragment
 import com.example.earthsustain.fragment.PasswordFragment
 
 import com.example.earthsustain.fragment.SignupFragment
@@ -22,7 +25,7 @@ import com.google.android.material.navigation.NavigationView
 
 
 
-class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+class AdminActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var fragmentManager : FragmentManager
@@ -37,6 +40,7 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     private fun createNavigation(savedInstanceState: Bundle?){
+
         drawerLayout = findViewById(R.id.drawer_layout_login)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbarlogin)
@@ -58,8 +62,8 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         if (savedInstanceState == null) {
             fragmentManager = supportFragmentManager
             val fragmentToOpen = when {
-                intent.getBooleanExtra("openSignup", false) -> SignupFragment()
-                intent.getBooleanExtra("openForgetPassword", false) -> PasswordFragment()
+                intent.getBooleanExtra("openViewProfile", false) -> AdminViewUserFragment()
+                //intent.getBooleanExtra("openEditProfile", false) -> AdminEditUserFragment()
                 //intent.getBooleanExtra("openRecoverPassword", false) -> RecoverPasswordFragment()
                 else -> LoginFragment()
             }
@@ -76,7 +80,7 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 startActivity(intent) }
             R.id.nav_login -> {
                 showToast("Login Clicked")
-                openFragment(LoginFragment())
+                openFragment(AdminViewUserFragment())
             }
             R.id.nav_register -> {
                 showToast("Register Clicked")
