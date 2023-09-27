@@ -22,74 +22,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="36dp"
-                android:text="@string/register_title"
+                android:text="Edit Profile"
                 android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/personalInfoTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/registerTextView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
-                android:text="@string/text_signupDesc" />
 
-            <EditText
-                android:id="@+id/emailEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/personalInfoTextView"
-                android:layout_marginTop="16dp"
-                android:hint="@string/hint_email"
-                android:inputType="textEmailAddress" />
-
-            <!-- Password TextInputLayout -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/emailEditText"
-                android:layout_marginTop="16dp"
-                android:textColorHint="#B9B8B8"
-                app:passwordToggleEnabled="true">
-
-                <EditText
-                    android:id="@+id/passwordEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#BEBEBE"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:padding="16dp"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Confirm Password TextInputLayout -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/confirmPasswordTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/passwordTextInputLayout"
-                android:layout_marginTop="16dp"
-                android:textColorHint="#B9B8B8"
-                app:passwordToggleEnabled="true">
-
-                <EditText
-                    android:id="@+id/confirmPasswordEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#BEBEBE"
-                    android:hint="Confirm Password"
-                    android:inputType="textPassword"
-                    android:padding="16dp"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
 
             <EditText
                 android:id="@+id/firstNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/confirmPasswordTextInputLayout"
+                android:layout_below="@id/registerTextView"
                 android:layout_marginTop="16dp"
                 android:hint="@string/hint_name"
                 android:inputType="text" />
@@ -136,12 +78,12 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/signUpButton"
+                android:id="@+id/EditButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/image"
                 android:layout_marginTop="24dp"
-                android:text="@string/text_signup" />
+                android:text="Edit Profile" />
 
         </RelativeLayout>
     </FrameLayout>

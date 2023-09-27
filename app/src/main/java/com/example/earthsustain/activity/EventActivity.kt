@@ -23,6 +23,7 @@ import com.example.earthsustain.fragment.EventFragment
 import com.example.earthsustain.fragment.HomeFragment
 import com.example.earthsustain.fragment.JoinEventFragment
 import com.example.earthsustain.fragment.LoginFragment
+import com.example.earthsustain.fragment.PasswordFragment
 import com.example.earthsustain.fragment.ProgFragment
 import com.example.earthsustain.fragment.SignupFragment
 import com.google.android.material.navigation.NavigationView
@@ -111,7 +112,7 @@ class EventActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             fragmentManager = supportFragmentManager
             val fragmentToOpen = when {
                 intent.getBooleanExtra("openEditProfile", false) -> EditProfileFragment()
-                //intent.getBooleanExtra("openForgetPassword", false) -> PasswordFragment()
+                intent.getBooleanExtra("openChangePassword", false) -> PasswordFragment()
                 //intent.getBooleanExtra("openRecoverPassword", false) -> RecoverPasswordFragment()
                 else -> EventFragment()
             }
